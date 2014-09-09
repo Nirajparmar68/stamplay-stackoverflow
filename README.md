@@ -1,18 +1,9 @@
 stamplay-stackoverflow
 ======================
 
-**Here at [Stamplay](https://stamplay.com) we really love [AngularJS](http://angularjs.org) so, after using it to create a [food ordering](https://github.com/Stamplay/stamplay-foodme) app like JustEat, we decided to use it again for our next tutorial. When it comes to solve any kind of unexpected problems while coding there is only one place that makes everyone confident about finding the right answer, and its name is [Stackoverflow](http://stackoverflow). So this time, as a tribute to this outstanding community, we dedicate this tutorial to it.**
-
-You can test it anytime simply creating a new project on Stamplay and uploading all the frontend assets with our client or our browser based code editor. 
-
-Feel free to implement more cool features (see the last paragraph for ideas), contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com)
-
 ![Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.24.13.png "Stackoverflow")
 
------------------------
-## Intro
-
-This is a demo of what you can achieve with [Stamplay](http://stamplay.com).
+**Here at [Stamplay](https://stamplay.com) we really love [AngularJS](http://angularjs.org) so, after using it to create a [food ordering](https://github.com/Stamplay/stamplay-foodme) app like JustEat, we decided to use it again for our next tutorial. When it comes to solve any kind of unexpected problems while coding there is only one place that makes everyone confident about finding the right answer, and its name is [Stackoverflow](http://stackoverflow). So this time, as a tribute to this outstanding community, we dedicate this tutorial to it.**
 
 It's somewhat a clone of [Stackoverflow](http://stackoverflow) and here you can see it up and running [https://bb76d7.stamplay.com](https://bb76d7.stamplay.com)
 
@@ -28,14 +19,18 @@ We love javascript and front end framework and this time we show you how you can
 
 Best of all, we used AngularJS :) Prepare to be amazed.
 
+You can test it anytime simply creating a new project on Stamplay and uploading all the frontend assets with our client or our browser based code editor. 
+
+Feel free to implement more cool features (see the last paragraph for ideas), contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com)
+
 
 -----------------------
 # Anatomy
 
-FoodMe is built around the following building blocks
+This Stackoverflow clone is built around the following building blocks
 
 * [Users](https://www.stamplay.com/docs#user)
-* [Gamification](https://www.stamplay.com/docs#gm)
+* [Gamification](http://stamplay.com/docs#challenge-challenge)
 * [Custom Objects](https://www.stamplay.com/docs#customobject)
 * [Email](https://www.stamplay.com/docs#email)
 
@@ -208,9 +203,30 @@ Handles user logout redirecting the browser to the logout URL acting on the `win
 ##### Home controller (homeCtrl.js)
 `$scope` stores the `sort` criteria currently used to list the questions. (I.E: `sort: {newest: true, votes: false, active:false}`. When the controller starts `loadQuestion` is triggered and it loads questions, their authors and also checks if a "checked" (correct) answer already exists. `updateSortingOptions` is called when we need to change the sort criteria.
 
+##### Answer controller (answerCtrl.js)
+This controller is responsible to enable/disable UI controls in the view that show the details and the answers of a question. It checks if the user looking at it is the author (so that he can eventually check answers as correct) or if the user previously voted for it. The main functions defined here are: `setChecked`, `comment`, `voteUp` and `voteDown`
+
+##### Create Question controllr (createQuestionCtrl.js)
+When this controller starts it initializes two variables in the `$scope`: `cobj` and `questionSubmitted`. The former represent the new instance for the question while the latter is a boolean value to check that the question has been submitted succesfully.
+It also implement the function `getTags` for autocompleting the tag that users can bind to the question.
+
+##### Tags controller (tagsCtrl.js)
+All tags are loaded through the service exposed when the controller starts. AngularJS takes care of sorting it. In case of search it will perform new requests to the server to fetch tags accordingly with the desired search.
+
+##### Users controller (usersCtrl.js)
 
 
+### Dependencies
+To complete the project we used the following great libs:
 
+* Bootstrap 3.2.0
+* Font awesome 4.1.0
+* jQuery 1.11.1
+* Angular 1.2.21
+* Angular route 1.2.21
+* Angular ui-boostrap 0.11.0
+* Textangular 1.2.2
+* Async 0.9.0
 
 
 -----------------------
