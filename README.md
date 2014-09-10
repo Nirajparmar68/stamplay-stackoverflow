@@ -61,7 +61,7 @@ Let's define the entities for this app, we will define **Question**, **Answer** 
 * Name: `title`, Type: `string`, required, the question’s title
 * Name: `text`, Type: `string`, required, the question’s body
 * Name: `author`, Type: `user_relation`, required, the author of the question (it will contain one user’s _id)
-* Name: `views`, Type: `number`, optional, the number of times a question has been viewed
+* Name: `views`, Type: `number`, optional, the number of times a question has been viewed by a logged user
 * Name: `answers`, Type: `collection of tags`, answers posted for the current question listed as an array of **answer**'s `_id` s
 * Name: `tags`, Type: `collection of tags`, tags related to the current question listed as an array of **tag**'s `_id` s
 
@@ -178,7 +178,7 @@ The Angular app is organized with a router, a service and some controllers to ha
 
 ### Router (router.js)
 
-The router is responsible to for interpolation markup interpolation (the tag that makes AngularJS react while parsing the DOM). Since Stamplay leverages the double curly bracket signature `{{}}` cause it leverages Handlebars for server-side page rendering we will tell Angular to look for the double square brackets signature `[[]]`. 
+The router is responsible for markup interpolation (the tag that makes AngularJS react while parsing the DOM). Since Stamplay leverages the double curly bracket signature `{{}}` cause it leverages Handlebars for server-side page rendering we will tell Angular to look for the double square brackets signature `[[]]`. 
 Anyway the main scope of the router is to list the urls that our AngularJS app need to resolve. The routes are:
 
 * `/auth/v0/github/connect`
@@ -206,7 +206,7 @@ Handles user logout redirecting the browser to the logout URL acting on the `win
 ##### Answer controller (answerCtrl.js)
 This controller is responsible to enable/disable UI controls in the view that show the details and the answers of a question. It checks if the user looking at it is the author (so that he can eventually check answers as correct) or if the user previously voted for it. The main functions defined here are: `setChecked`, `comment`, `voteUp` and `voteDown`
 
-##### Create Question controllr (createQuestionCtrl.js)
+##### Create Question controller (createQuestionCtrl.js)
 When this controller starts it initializes two variables in the `$scope`: `cobj` and `questionSubmitted`. The former represent the new instance for the question while the latter is a boolean value to check that the question has been submitted succesfully.
 It also implement the function `getTags` for autocompleting the tag that users can bind to the question.
 
