@@ -260,7 +260,7 @@ All tags are loaded through the service exposed when the controller starts. Angu
 Tutti gli utenti vengono caricati attraverso il resolve del router, funzione search 
 
 ### Dependencies
-To complete the project we used the following great libs:
+To complete the project we used the following great libs that you'll find in the `assets` folder of this tutorial:
 
 * Bootstrap 3.2.0
 * Font awesome 4.1.0
@@ -277,9 +277,9 @@ To complete the project we used the following great libs:
 
 # Managing the app
 
-Everytime you create reasource using Custom Object you can manage instances of the entities in the Admin section. This will let you to easily add edit and delete restaurant, meals and orders.
+If you want to control the content made by the users you can use the Custom Object admin section to manage it. This will let you to easily add edit and delete questions, answers and tags.
 
-![Manage Restaurant](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-14.05.29.png "Manage restaurant")
+![Manage Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-14.05.29.png "Manage Stackoverflow")
 
 
 -----------------------
@@ -297,18 +297,6 @@ Then you need to upload the frontend files in your app and you can do it in two 
 
 * Copy/Upload them via the Layout section of your app on Stamplay editor
 * [Get Stamplay sync](http://cdn.stamplay.com/stamplay-sync/stamplay-sync.zip) and run **Stamplay Sync**, make it download the frontend assets of your app and then replace them with the ones you got from this repo. Stamplay Sync will upload everything for you on your app.
-
-
------------------------
-# Next steps
-
-Here are a few ideas for further improvement :
-
-* bring together login and registration controllers by creating a single page to handle both user login and signup
-* add social login like Facebook or Google to enrich user's identity
-* if the cart contains more occurencies of a meal, group them
-* let users to comment on the restaurants
-* _Your idea here… ?_
 
 Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
 
