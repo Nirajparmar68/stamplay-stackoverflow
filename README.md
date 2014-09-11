@@ -171,7 +171,7 @@ Action: Email - Send Email
 _______________________________
 
 
-## The frontend and AngularJS
+# The frontend and AngularJS
 
 The Angular app is organized with a router, a service and some controllers to handle the front end logic. Let's analyze more in depth how they're defined.
 
@@ -214,7 +214,7 @@ It also implement the function `getTags` for autocompleting the tag that users c
 All tags are loaded through the service exposed when the controller starts. AngularJS takes care of sorting it. In case of search it will perform new requests to the server to fetch tags accordingly with the desired search.
 
 ##### Users controller (usersCtrl.js)
-
+Tutti gli utenti vengono caricati attraverso il resolve del router, funzione search 
 
 ### Dependencies
 To complete the project we used the following great libs:

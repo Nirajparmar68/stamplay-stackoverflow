@@ -1,0 +1,43 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+#footer {
+	color: #444;
+	background: #777;
+	border-top: 7px solid #000;
+	padding: 15px;
+	margin-top: 30px;
+
+	position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+}
+
+#footer .container{
+		background: #777;
+
+}
+
+#footer-menu {
+	float: left;
+	font-size: 100%;
+	line-height: 30px;
+}
+
+#footer.categories #footer-menu {
+	/*margin-bottom: 1.5em;*/
+	line-height: 1.7em;
+}
+
+.top-footer-links a{
+		color: #fff!important;
+		margin: 0 .8em 0 0;
+}

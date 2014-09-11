@@ -1,0 +1,39 @@
+<div class="row">
+
+  <div class="col-md-12">
+
+    <div class="row subheader">
+      <div class="col-md-9">
+        <h4><strong>Users</strong></h4>
+      </div>
+      <div class="col-md-3 pull-right" id="tabs">
+        <a ng-class="{youarehere : sortOnNewUsers}" ng-click="sort('new')">new users</a>
+      </div>
+    </div>
+
+    <div class="row page-description">
+  		<div class="col-md-12">
+    		Type to find users: <input type="text" ng-change="search()" ng-model="searchUser"></input>
+    	</div>
+    	<!-- ROW-->
+    </div>
+
+
+    <div class="row tag-container">
+    	<div class="col-md-3 user-info" ng-repeat="user in users">
+    		<div class="user-gravatar48">
+    			<img ng-src="[[user.profileImg]]" style="width:48px; height:48px; float:left"  />
+    		</div>
+    		<div class="user-details-info">
+    			<a>[[user.displayName]]</a>
+    			<br>
+    			<span class="user-location">[[user.dt_create| date:"mediumDate"]]</span>
+    			<br>
+    		</div>
+    	</div>
+    </div>
+
+    <!-- COL MD 12 -->
+	</div>
+<!-- ROW -->
+</div>    

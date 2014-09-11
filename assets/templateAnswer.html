@@ -1,0 +1,246 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1 class="answer-title">[[question.title]]</h1>
+		<hr>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-10">
+
+		
+		<div class="row">
+			<div class="col-md-1">
+
+				<a class="sprite" 
+					ng-class = "{'vote-up-on' : question.actions.votes.users.indexOf(user.id) != -1,
+					'vote-up-off': question.actions.votes.users.indexOf(user.id) === -1 }"
+					ng-click="voteUp(question)"></a>
+
+				<div class="text-center vote-total">
+					[[question.actions.votes.total - question.actions.ratings.total ]]
+				</div>
+				
+				<a  class="sprite" 
+					  ng-class = "{'vote-down-on' : checkVoteDown(question.actions.ratings.users),
+												'vote-down-off': !checkVoteDown(question.actions.ratings.users) }"
+						ng-click="voteDown(question)"></a>
+			
+			</div>
+
+			<div class="col-md-11">
+				<div class="row">
+
+					<div class="col-md-12 post-text" ng-bind-html="question.text">
+						[[question.text]]
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+
+						<a class="post-tag" ng-repeat="tag in question.tags">[[tag.name]]</a>
+					
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+
+						<div class="owner post-signature pull-right">
+							
+							<div>
+								asked [[question.dt_create | date:"mediumDate"]]
+							</div>
+
+							<div class="user-gravatar">
+								<img ng-src="[[question.author.profileImg]]"></img>
+							</div>
+
+							<div class="user-details">
+								[[question.author.displayName]]
+							</div>
+						
+						</div>
+
+				</div>
+				<!-- ROW -->
+			</div>
+
+		<!-- ROW -->	
+		</div>
+
+			<div class="col-md-12 comments">
+
+				<table>
+					<tbody>
+						<tr class="comment" ng-repeat="comment in question.actions.comments">
+							<td class="comment-text">
+								<div class="comment-body">
+									<span class="comment-copy"> <!-- ng-bind-html="question.text" -->
+										[[comment.text]]
+									</span>
+									- [[comment.displayName]] at [[comment.dt_create | date:"dd/MM/yyyy h:mma"]]
+								</div> 
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-md-12">
+
+				<a class="comments-link" ng-click="toggleCommentArea(question, $index)">add a comment to the question</a>
+				<div ng-show="question.showCommentArea" >
+					<h4>Your comment</h4>
+					<textarea class="commentArea" ng-model="questionCommentText" ></textArea>
+					<div class="btn btn-default submit-answer" ng-click="comment(question, $index, questionCommentText)">
+						Comment question
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="col-md-12">
+
+				<h2 class="num-answers">[[question.answers.length]] Answers</h2>
+				<hr style="margin-bottom:0px;">			
+
+			</div>
+
+
+
+		<div ng-repeat="answer in question.answers" class="answer col-md-12">
+			<div class="row">
+				<div class="col-md-1">
+					<a class="sprite" 
+					ng-class = "{'vote-up-on' : answer.actions.votes.users.indexOf(user.id) != -1,
+					'vote-up-off': answer.actions.votes.users.indexOf(user.id) === -1 }"
+					ng-click="voteUp(answer,$index)"></a>
+					<div class="text-center vote-total">
+						[[answer.actions.votes.total - answer.actions.ratings.total]]
+					</div>
+					<a 
+					ng-class = "{'vote-down-on' : checkVoteDown(answer.actions.ratings.users),
+					'vote-down-off': !checkVoteDown(answer.actions.ratings.users) }"
+					class="sprite" ng-click="voteDown(answer,$index)"></a>
+					<span 
+						ng-show="canCheckAnswer()" 
+						class="vote-accepted-off" 
+						ng-click="setChecked(answer, $index)">
+					</span>
+					<span 
+						ng-show="answer.checked"
+						class="vote-accepted-on">
+					</span>
+				</div>
+
+				<div class="col-md-11">
+					<div class="row">
+						<div class="col-md-12 post-text" ng-bind-html="answer.text">
+							[[answer.text]]
+						</div>
+						<!-- ROW -->
+					</div>
+					<!-- COL 11 -->
+				</div>
+		<!-- ROW-->
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="answer-author owner post-signature pull-right">
+					<div>asked [[answer.dt_create | date:"mediumDate"]]</div>
+
+					<div class="user-gravatar">
+						<img ng-src="[[answer.author.profileImg]]"></img>
+					</div>
+
+					<div class="user-details">
+						[[answer.author.displayName]]
+					</div>
+
+				</div>
+			</div>
+			<!-- ROW -->
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 comments">
+
+				<table>
+					<tbody>
+						<tr class="comment" ng-repeat="comment in answer.actions.comments">
+							<td class="comment-text">
+								<div class="comment-body">
+									<span class="comment-copy"> <!-- ng-bind-html="question.text" -->
+										[[comment.text]]
+									</span>
+									- [[comment.displayName]] at [[comment.dt_create | date:"dd/MM/yyyy h:mma"]]
+								</div> 
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		<!-- ROW -->
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<a class="comments-link" ng-click="toggleCommentArea(answer,$index)">add a comment</a>
+				<div ng-show="answer.showCommentArea" >
+					<h4>Your comment</h4>
+					<textarea class="commentArea" ng-model="answer.commentText" ></textarea>
+					<div class="btn btn-default submit-answer" ng-click="comment(answer, $index, commentText)">
+						Comment answer
+					</div>
+				</div>
+			</div>
+		<!-- ROW -->
+		</div>
+			
+
+	<!-- NG REPEAT -->
+	</div>
+
+
+
+		<div  ng-controller="answerCreatorCtrl">
+			
+			<div class="col-md-12">
+				<h3 class="bottom-notice">
+					Know someone who can answer?
+				</h3>
+				<h4 class="space" ng-show="user.id">Your answer</h4>
+				<text-angular ng-show="user.id" ng-model="newAnswer.text" ></text-angular>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<div class="btn btn-default submit-answer" ng-hide="user.id" ng-click="toLogin()" style="margin-top:25px;">
+							To post your answer please login first
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-11" ng-show="user.id">
+				<div class="btn btn-default submit-answer" ng-click="createAnswer()">
+					Post Your Answer
+				</div>
+			</div>
+			<div class="col-md-1" ng-show="user.id">
+				<span ng-show="successInCreation">Success</span>
+				<span ng-show="errorInCreation">Error</span>
+			</div>
+
+		<!-- ROW -->	
+		</div>
+	<!-- COL-MD-10 -->
+	</div>
+
+
+	</div>
+<div class="col-md-2"></div>
