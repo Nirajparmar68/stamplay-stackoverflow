@@ -5,7 +5,7 @@ stamplay-stackoverflow
 
 **Here at [Stamplay](https://stamplay.com) we really love [AngularJS](http://angularjs.org) so, after using it to create a [food ordering](https://github.com/Stamplay/stamplay-foodme) app like JustEat, we decided to use it again for our next tutorial. When it comes to solve any kind of unexpected problems while coding there is only one place that makes everyone confident about finding the right answer, and its name is [Stackoverflow](http://stackoverflow). So this time, as a tribute to this outstanding community, we dedicate this tutorial to it.**
 
-It's somewhat a clone of [Stackoverflow](http://stackoverflow) and here you can see it up and running [https://bb76d7.stamplay.com](https://bb76d7.stamplay.com)
+Here is what you will get: [https://bb76d7.stamplay.com](https://bb76d7.stamplay.com)
 
 We love javascript and front end framework and this time we show you how you can create this app using [AngularJS](http://angularjs.org) to implement the client side logic. Here are the user stories for this example:
 
@@ -17,11 +17,9 @@ We love javascript and front end framework and this time we show you how you can
 * as a logged user I can upvote/downvote an answer
 * as a logged user and author of a question I can mark as “correct” one of the answer received
 
-Best of all, we used AngularJS :) Prepare to be amazed.
+You get your own right now simply creating a new project on Stamplay, following this guide to understand how to configure it and then use the code on the Github repository.
 
-You can test it anytime simply creating a new project on Stamplay and uploading all the frontend assets with our client or our browser based code editor. 
-
-Feel free to implement more cool features (see the last paragraph for ideas), contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com)
+Feel free to implement more cool features, contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com)
 
 
 -----------------------
@@ -32,6 +30,7 @@ This Stackoverflow clone is built around the following building blocks
 * [Users](https://www.stamplay.com/docs#user)
 * [Gamification](http://stamplay.com/docs#challenge-challenge)
 * [Custom Objects](https://www.stamplay.com/docs#customobject)
+* Mailchimp
 * [Email](https://www.stamplay.com/docs#email)
 
 
@@ -41,9 +40,7 @@ Go to [your account](http://editor.stamplay.com/apps) and create a new app.
 
 ## Configuring the components
 
-After creating a new app on [Stamplay](https://editor.stamplay.com) let's start by picking the component we want to use in our app that are: **User**, **Gamification**, **Email**, **Mailchimp** and **Custom Objects**.
-
-Lets see one-by-one how they are configured:
+After creating a new app on [Stamplay](https://editor.stamplay.com) let's start by picking the component we need in our app. Lets see one-by-one how they are configured:
 
 ### User
 Since this is something for developers we decided to make our users signup with our last OAuth integration, Github. To get your own credentials go to [https://github.com/settings/applications](https://github.com/settings/applications) and click on "Register a new app". Fill the "Authorized Redirect URIs" with the URL: **https://[appId].stamplay.com/auth/v0/github/callback** and you'll have your ClientId and Secret to fill the fields as you can see from the image below. 
@@ -62,7 +59,7 @@ Let's define the entities for this app, we will define **Question**, **Answer** 
 * Name: `text`, Type: `string`, required, the question’s body
 * Name: `author`, Type: `user_relation`, required, the author of the question (it will contain one user’s _id)
 * Name: `views`, Type: `number`, optional, the number of times a question has been viewed by a logged user
-* Name: `answers`, Type: `collection of tags`, answers posted for the current question listed as an array of **answer**'s `_id` s
+* Name: `answers`, Type: `collection of answers`, answers posted for the current question listed as an array of **answer**'s `_id` s
 * Name: `tags`, Type: `collection of tags`, tags related to the current question listed as an array of **tag**'s `_id` s
 
 ##### Answer
