@@ -111,60 +111,103 @@ To push email addresses of app's users to a Mailchimp list you only need to conn
 
 Now let's add the tasks that will define the server side of our app. For our app we want that:
 
-### When a user confirm a new order, he receives an email confirm with all the details
+### When a user signs up, join the stack-challenge to be able to earn points
 
-Trigger : Custom Object - New
+Trigger : User - Signup
 
-Action: Email - Send Email
+Action: Gamification - Join Challenge
 
-**Form submit configuration**
+**User signup configuration**
 
-	Custom Object: Order
+	none
 
-**Send Email configuration**
+**Gamification Join Challenge configuration**
 
-	to: {{coinstance.email}} //The recipient address taken from the order info 
-	from: foodme@stamplay.com 
-	name: Stamplay FoodMe
-	Subject: "Thanks for ordering with Stamplay FoodMe"
-	Body: "Hi {{coinstance.surname}}, <br/> 
-			your order are : {{coinstance.meals}} <br/>
-			the final price is : {{coinstance.price}} € <br/>
-			and it will be delivered at {{coinstance.address}}<br/>
-			<br/>
-			thanks for choosing Stamplay FoodMe<br/>
-			regards"
+	challenge: stack-challenge
 
 
+### When a user signs up, add him to my Mailchimp list
 
-### When a new order is submitted, notify the restaurant owner with an email
+Trigger : User - Signup
 
-Trigger : Custom Object - New instance
+Action: Mailchimp - Subscribe to a List
 
-Action: Email - Send Email
+**User signup configuration**
 
-**Form submit configuration**
+	none
 
-	Webhook name: ordercomplete
+**Mailchimp Subscribe to a List configuration**
 
-**Send Email configuration**
+	list: Your-mailchimp-list
+	email: {{user.email}}
+	update existing: Yes
+	send welcome message: No
+	first name: {{user.name.givenName}}
+	last name: {{user.name.familyName}}
 
-	to: {{incoming.body.restaurant_owner_email}} 
-	from: foodme@stamplay.com 
-	name: Stamplay FoodMe 
-	Subject: "Thanks for ordering with Stamplay FoodMe"
-	Body: "Good news! <br/><br/>
+### When a question is up voted, its author get 5 points
 
-			A new order has been placed via FoodMe for your restaurant. 
-			Here are the details:<br/><br/>
+Trigger : Custom Object - Upvote
 
-			Surname: {{incoming.body.order.surname}}  <br/>
-			Email: {{incoming.body.order.email}} <br/>
-			Meals: {{incoming.body.order.meals}} <br/>
-			<br/><br/>
-			Total: {{incoming.body.order.price}} <br/>
+Action: Gamification - Add Points
 
-			Hurry up "
+**Question Upvote configuration**
+
+	Custom Object: Question
+
+**Gamification Add Points configuration**
+
+	challenge: stack-challenge
+	numpoints: 5
+	user: {{coinstance.author}}
+
+### When a question is down voted, its author loose 2 points
+
+Trigger : Custom Object - Downvote
+
+Action: Gamification - Add Points
+
+**Question Upvote configuration**
+
+	Custom Object: Question
+
+**Gamification Add Points configuration**
+
+	challenge: stack-challenge
+	numpoints: -2
+	user: {{coinstance.author}}
+
+### When an answer is up voted, its author get 10 points
+
+Trigger : Custom Object - Upvote
+
+Action: Gamification - Add Points
+
+**Question Upvote configuration**
+
+	Custom Object: Answer
+
+**Gamification Add Points configuration**
+
+	challenge: stack-challenge
+	numpoints: 10
+	user: {{coinstance.author}}
+
+### When an answer is down voted, its author get -2 points
+
+Trigger : Custom Object - Downvote
+
+Action: Gamification - Add Points
+
+**Question Upvote configuration**
+
+	Custom Object: Answer
+
+**Gamification Add Points configuration**
+
+	challenge: stack-challenge
+	numpoints: -2
+	user: {{coinstance.author}}
 
 
 
