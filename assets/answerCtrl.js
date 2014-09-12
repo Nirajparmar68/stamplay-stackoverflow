@@ -38,7 +38,7 @@ app.controller('answerCtrl', ['$scope', 'question', 'tagService', '$http',
 			}
 
 			var found = users.filter(function (user) {
-				return user.userId === $scope.user.id;
+				return user === $scope.user.id;
 			});
 			return found.length > 0;
 		}
@@ -100,15 +100,18 @@ app.controller('answerCtrl', ['$scope', 'question', 'tagService', '$http',
 		}
 
 		/* Comment an answer or a question */
-		$scope.comment = function (model, $index) {
+		$scope.comment = function (model, $index,questionCommentText) {
 			if (!$scope.user) {
 				return;
 			}
 
 			var cobjectId = model.cobjectId;
-			var data = {
-				text: $scope.question.answers[$index].commentText
-			};
+			var data = {};
+			if(cobjectId === 'question'){
+				data.text = questionCommentText;
+			}else{
+				data.text = $scope.question.answers[$index].commentText;
+			}
 
 			$http({
 				method: 'PUT',
@@ -116,11 +119,12 @@ app.controller('answerCtrl', ['$scope', 'question', 'tagService', '$http',
 				data: data
 			}).success(
 				function (response) {
-					$scope.question.answers[$index].commentText = '';
 					// $scope["commentText" + $index] = '';
 					if (model.cobjectId === 'answer') {
 						$scope.question.answers[$index].actions.comments = response.actions.comments;
+						$scope.question.answers[$index].commentText = '';
 					} else {
+						$scope.questionCommentText = '';
 						$scope.question.actions.comments = response.actions.comments;
 					}
 				});
@@ -133,10 +137,13 @@ app.controller('answerCtrl', ['$scope', 'question', 'tagService', '$http',
 			}
 
 			var url = '/api/cobject/v0/' + model.cobjectId + '/' + model._id + '/vote';
-			if (model.actions.votes.users.indexOf($scope.user.id) == -1 && !$scope.checkVoteDown(model.actions.ratings.users)) {
+			if (!$scope.checkVoteDown(model.actions.votes.users_upvote)) {
 				$http({
 					method: 'PUT',
-					url: url
+					url: url,
+					data: {
+						type: 'upvote'
+					}
 				}).success(function (response) {
 					if (model.cobjectId === 'question') {
 						$scope.question.actions.votes = response.actions.votes;
@@ -153,20 +160,19 @@ app.controller('answerCtrl', ['$scope', 'question', 'tagService', '$http',
 				return;
 			}
 
-			var url = '/api/cobject/v0/' + model.cobjectId + '/' + model._id + '/rate';
-			if (model.actions.votes.users.indexOf($scope.user.id) == -1 && !$scope.checkVoteDown(model.actions.ratings.users)) {
-				var obj = {
-					rate: 1
-				};
+			var url = '/api/cobject/v0/' + model.cobjectId + '/' + model._id + '/vote';
+			if (!$scope.checkVoteDown(model.actions.votes.users_downvote)) {
 				$http({
 					method: 'PUT',
 					url: url,
-					data: obj,
+					data: {
+						type: 'downvote'
+					},
 				}).success(function (response) {
 					if (model.cobjectId === 'question') {
-						$scope.question.actions.ratings = response.actions.ratings;
+						$scope.question.actions.votes = response.actions.votes;
 					} else {
-						$scope.question.answers[$index].actions.ratings = response.actions.ratings;
+						$scope.question.answers[$index].actions.votes = response.actions.votes;
 					}
 				});
 			} else {

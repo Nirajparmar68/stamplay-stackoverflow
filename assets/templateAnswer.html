@@ -13,17 +13,17 @@
 			<div class="col-md-1">
 
 				<a class="sprite" 
-					ng-class = "{'vote-up-on' : question.actions.votes.users.indexOf(user.id) != -1,
-					'vote-up-off': question.actions.votes.users.indexOf(user.id) === -1 }"
+					ng-class = "{'vote-up-on' : question.actions.votes.users_upvote.indexOf(user.id) != -1,
+					'vote-up-off': question.actions.votes.users_upvote.indexOf(user.id) === -1 }"
 					ng-click="voteUp(question)"></a>
 
 				<div class="text-center vote-total">
-					[[question.actions.votes.total - question.actions.ratings.total ]]
+					[[question.actions.votes.users_upvote.length - question.actions.votes.users_downvote.length ]]
 				</div>
 				
 				<a  class="sprite" 
-					  ng-class = "{'vote-down-on' : checkVoteDown(question.actions.ratings.users),
-												'vote-down-off': !checkVoteDown(question.actions.ratings.users) }"
+					  ng-class = "{'vote-down-on' : checkVoteDown(question.actions.votes.users_downvote),
+												'vote-down-off':  !checkVoteDown(question.actions.votes.users_downvote) }"
 						ng-click="voteDown(question)"></a>
 			
 			</div>
@@ -55,7 +55,7 @@
 							</div>
 
 							<div class="user-gravatar">
-								<img ng-src="[[question.author.profileImg]]"></img>
+								<img style="width:50px;" ng-src="[[question.author.profileImg]]"></img>
 							</div>
 
 							<div class="user-details">
@@ -116,15 +116,15 @@
 			<div class="row">
 				<div class="col-md-1">
 					<a class="sprite" 
-					ng-class = "{'vote-up-on' : answer.actions.votes.users.indexOf(user.id) != -1,
-					'vote-up-off': answer.actions.votes.users.indexOf(user.id) === -1 }"
+					ng-class = "{'vote-up-on' : answer.actions.votes.users_upvote.indexOf(user.id) != -1,
+					'vote-up-off': answer.actions.votes.users_upvote.indexOf(user.id) === -1 }"
 					ng-click="voteUp(answer,$index)"></a>
 					<div class="text-center vote-total">
-						[[answer.actions.votes.total - answer.actions.ratings.total]]
+						[[answer.actions.votes.users_upvote.length - answer.actions.votes.users_downvote.length]]
 					</div>
 					<a 
-					ng-class = "{'vote-down-on' : checkVoteDown(answer.actions.ratings.users),
-					'vote-down-off': !checkVoteDown(answer.actions.ratings.users) }"
+					ng-class = "{'vote-down-on' : checkVoteDown(answer.actions.votes.users_downvote),
+					'vote-down-off': !checkVoteDown(answer.actions.votes.users_downvote) }"
 					class="sprite" ng-click="voteDown(answer,$index)"></a>
 					<span 
 						ng-show="canCheckAnswer()" 
@@ -156,7 +156,7 @@
 					<div>asked [[answer.dt_create | date:"mediumDate"]]</div>
 
 					<div class="user-gravatar">
-						<img ng-src="[[answer.author.profileImg]]"></img>
+						<img style="width:50px;"  ng-src="[[answer.author.profileImg]]"></img>
 					</div>
 
 					<div class="user-details">

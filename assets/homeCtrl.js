@@ -58,9 +58,14 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 		/* Loads the questions given a sort parameter */
 		$scope.loadQuestions = function () {
 			/* Gets all the questions */
-			if ($scope.questionParams.per_page * $scope.questionParams.page > $scope.totalElements) {
+
+			if ($scope.totalElements > 9 && $scope.questionParams.per_page * $scope.questionParams.page > $scope.totalElements) {
 				return;
 			}
+			if($scope.totalElements < 10 && $scope.questionParams.page > 1){
+				return;
+			}
+			$scope.questions = [];
 			$scope.busy = true;
 			$http({
 				method: 'GET',
@@ -77,18 +82,13 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 
 					function (question, eachSeriesCb) {
 						if (i < toSkip) {
-							console.log('SKIP');
 							i++;
 							eachSeriesCb();
 						} else {
-							console.log('ELSE');
-							console.log(question);
 							question.isSolved = false;
 							async.auto({
 
 									checkAnswer: function (autoCb) {
-
-										console.log('1 check ans');
 										/* For each question we have to check if the answer has been checked as solved */
 										async.each(question.answers, function (answer, eachCb) {
 
@@ -100,9 +100,14 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 													select: 'checked'
 												}
 											}).success(function (answerOnlyChecked) {
+
 												if (answerOnlyChecked && answerOnlyChecked.data && answerOnlyChecked.data[0]) {
-													question.isSolved = answerOnlyChecked.data[0].checked;
-													eachCb();
+													if(question.isSolved){
+														eachCb()
+													}else{
+														question.isSolved = answerOnlyChecked.data[0].checked;
+														eachCb();
+													}
 
 												} else {
 													eachCb();
@@ -114,7 +119,6 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 									},
 
 									populateAuthor: function (autoCb) {
-										console.log('2 pop auth');
 
 										/* Populating question's tag */
 										tagService.populateTag(question);
@@ -167,7 +171,6 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 
 					},
 					function (err) {
-						console.log('ALL COMPLETE');
 						i = 0;
 						setTimeout(function () {
 							$scope.$apply(function () {
@@ -177,10 +180,15 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 									/* Sorting on votes: since up votes are saved in votes and down votes are saved in ratings we have the need to make a custom sorting*/
 
 									$scope.questions = $scope.questions.sort(function (a, b) {
-										var votesA = a.actions.votes.total - a.actions.ratings.total;
-										var votesB = b.actions.votes.total - b.actions.ratings.total;
-										return (votesA > votesB) ? -1 : 1;
-
+										var votesA = a.actions.votes.users_upvote.length - a.actions.votes.users_downvote.length;
+										var votesB = b.actions.votes.users_upvote.length - b.actions.votes.users_downvote.length;
+										if(votesA > votesB){
+											return -1;
+										}else if(votesA < votesB){
+											return 1;
+										}else{
+											return 0;
+										}
 									})
 								}
 							});
@@ -191,7 +199,6 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 
 		/* Listener on tab */
 		$scope.sortQuestion = function (sortOn) {
-			$scope.questions = [];
 			$scope.questionParams.page = 1;
 			switch (sortOn) {
 			case 'newest':
