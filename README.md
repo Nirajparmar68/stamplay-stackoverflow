@@ -243,6 +243,9 @@ Handles user logout redirecting the browser to the logout URL acting on the `win
 ##### Home controller (homeCtrl.js)
 `$scope` stores the `sort` criteria currently used to list the questions. (I.E: `sort: {newest: true, votes: false, active:false}`. When the controller starts `loadQuestion` is triggered and it loads questions, their authors and also checks if a "checked" (correct) answer already exists. `updateSortingOptions` is called when we need to change the sort criteria.
 
+##### Points controller (pointsCtrl.js)
+If the user is logged this controller fetches the user's points.
+
 ##### Answer controller (answerCtrl.js)
 This controller is responsible to enable/disable UI controls in the view that show the details and the answers of a question. It checks if the user looking at it is the author (so that he can eventually check answers as correct) or if the user previously voted for it. The main functions defined here are: `setChecked`, `comment`, `voteUp` and `voteDown`
 
@@ -254,7 +257,7 @@ It also implement the function `getTags` for autocompleting the tag that users c
 All tags are loaded through the service exposed when the controller starts. AngularJS takes care of sorting it. In case of search it will perform new requests to the server to fetch tags accordingly with the desired search.
 
 ##### Users controller (usersCtrl.js)
-Tutti gli utenti vengono caricati attraverso il resolve del router, funzione search 
+All users are loaded through the service exposed when the controller starts. In case of search it will perform new requests to the server to fetch users accordingly with the desired search.
 
 ### Dependencies
 To complete the project we used the following great libs that you'll find in the `assets` folder of this tutorial:
