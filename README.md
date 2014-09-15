@@ -275,7 +275,6 @@ To complete the project we used the following great libs that you'll find in the
 * Textangular 1.2.2
 * Async 0.9.0
 
-
 -----------------------
 
 
@@ -284,6 +283,18 @@ To complete the project we used the following great libs that you'll find in the
 In the Admin section you can edit and manage data saved by your app. Here you can add content and we will now use it to create the tags that we want to make available. Click on "Admin" and then "Custom-Object" to access to the data admin section, then select tag from the dropdown a start creating your own.
 
 ![Manage Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-15-alle-12.39.35.png "Manage Stackoverflow")
+
+
+-----------------------
+# Building the frontend
+
+To build the app you need to have NPM installed and then run those two commands:
+
+	npm install
+	grunt build
+
+
+You will find the applications' controllers minified in assets/app.min.js and the application's css file in assets/stamplay-stackoverflow.min.css.
 
 
 -----------------------
