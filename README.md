@@ -298,6 +298,20 @@ Then you need to upload the frontend files in your app and you can do it in two 
 * Copy/Upload them via the Layout section of your app on Stamplay editor
 * [Get Stamplay sync](http://cdn.stamplay.com/stamplay-sync/stamplay-sync.zip) and run **Stamplay Sync**, make it download the frontend assets of your app and then replace them with the ones you got from this repo. Stamplay Sync will upload everything for you on your app.
 
+
+-----------------------
+# Next steps
+
+Here are a few ideas for further improvement :
+
+* Add a search bar to quickly navigate thourgh all the questions as Stackoverflow does
+* _Your idea here… ?_
+
+Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
+
+Ciao!
+
+
 Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
 
 Ciao!
