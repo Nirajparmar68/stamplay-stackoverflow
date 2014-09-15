@@ -207,6 +207,10 @@ Action: Gamification - Add Points
 	user: {{coinstance.author}}
 
 
+ After finishing all those configurations your task view will look like this one:
+ 
+ ![Tasks Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-15-alle-12.48.05.png "Tasks Stackoverflow")
+
 
 _______________________________
 
