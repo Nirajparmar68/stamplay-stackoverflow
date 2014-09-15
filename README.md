@@ -314,8 +314,3 @@ Here are a few ideas for further improvement :
 Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
 
 Ciao!
-
-
-Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
-
-Ciao!
