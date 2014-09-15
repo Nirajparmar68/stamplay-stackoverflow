@@ -58,21 +58,19 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 		/* Loads the questions given a sort parameter */
 		$scope.loadQuestions = function () {
 			/* Gets all the questions */
-
-			if ($scope.totalElements > 9 && $scope.questionParams.per_page * $scope.questionParams.page > $scope.totalElements) {
+			if ($scope.questionParams.per_page * ($scope.questionParams.page-1) >= $scope.totalElements) {
 				return;
 			}
 			if($scope.totalElements < 10 && $scope.questionParams.page > 1){
 				return;
 			}
-			$scope.questions = [];
 			$scope.busy = true;
 			$http({
 				method: 'GET',
 				url: '/api/cobject/v0/question',
 				params: $scope.questionParams
 			}).success(function (res, status, headers, config) {
-				$scope.totalElements = headers()['x-total-elements'];
+				$scope.totalElements = parseInt(headers()['x-total-elements']);
 				var i = 0;
 				var toSkip = $scope.questions.length;
 				$scope.questions = $scope.questions.concat(res.data);
@@ -161,7 +159,7 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 										}
 									}
 								},
-								function (err) {
+								function (err) {	
 
 									eachSeriesCb(null);
 
@@ -174,8 +172,9 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 						i = 0;
 						setTimeout(function () {
 							$scope.$apply(function () {
-								$scope.questionParams.page++;
 								$scope.busy = false;
+								$scope.questionParams.page++;
+
 								if ($scope.questionParams.sort === '-actions.votes.total') {
 									/* Sorting on votes: since up votes are saved in votes and down votes are saved in ratings we have the need to make a custom sorting*/
 
@@ -200,6 +199,7 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 		/* Listener on tab */
 		$scope.sortQuestion = function (sortOn) {
 			$scope.questionParams.page = 1;
+			$scope.questions = [];
 			switch (sortOn) {
 			case 'newest':
 				updateSortingOptions('newest');

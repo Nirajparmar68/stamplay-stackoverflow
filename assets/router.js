@@ -54,7 +54,7 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 		function (taOptions) {
 			taOptions.toolbar =
 				[
-					['bold', 'italics'], ['insertLink', 'quote', 'pre', 'insertImage'], ['ol', 'ul'], ['h1', 'h2'], ['undo', 'redo']
+					['bold', 'italics'], ['insertLink', 'quote', 'pre', 'insertImage'], ['ol', 'ul'], ['h1', 'h2'], ['undo', 'redo'], ['html']
 				];
 			return taOptions;
 			}
