@@ -277,9 +277,9 @@ To complete the project we used the following great libs that you'll find in the
 
 # Managing the app
 
-If you want to control the content made by the users you can use the Custom Object admin section to manage it. This will let you to easily add edit and delete questions, answers and tags.
+In the Admin section you can edit and manage data saved by your app. Here you can add content and we will now use it to create the tags that we want to make available. Click on "Admin" and then "Custom-Object" to access to the data admin section, then select tag from the dropdown a start creating your own.
 
-![Manage Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-14.05.29.png "Manage Stackoverflow")
+![Manage Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-15-alle-12.39.35.png "Manage Stackoverflow")
 
 
 -----------------------
