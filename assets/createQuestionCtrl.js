@@ -73,8 +73,8 @@ app.controller('createQuestionCtrl', ['$rootScope', '$scope', '$http', '$locatio
 				url: '/api/cobject/v0/question',
 				data: $scope.cobj
 			}).success(function (response) {
-				if (!$scope.cobj.tags instanceof Array) {
-					$scope.cobj.tags = [];
+				if ($scope.cobj.tags.length === 24 ) {
+					$scope.cobj.tags = [$scope.cobj.tags];
 				}
 				//Get the tag 
 				async.each($scope.cobj.tags, function (tagId, callback) {
