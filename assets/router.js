@@ -99,33 +99,30 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 				var questionId = getURLParameters('id');
 
 				/* Get the question with _id = questionId */
-				$http.get('/api/cobject/v0/question/' + questionId).then(function (response) {
+				var url =  '/api/cobject/v0/question/' + questionId;
+				$http({
+					method: 'GET', 
+					url: url,
+					params : {
+						populate :true
+					}
+				}).then(function (response) {
 					var question = response.data;
 
-					/* The answers are only ids so we have to populate them */
-					var allAnswers = [];
-					async.each(question.answers,
-						function (answerId, callback) {
-							$http({
-								url: '/api/cobject/v0/answer/' + answerId,
-								method: 'GET'
-							}).success(function (answer) {
-								allAnswers.push(answer);
-								callback(null);
-							}).error();
-						},
-						function () {
-							/* Sorting answers */
-							allAnswers = allAnswers.sort(sortAnswers);
-							question.answers = allAnswers;
+					/* The answers are now populated */
+					var allAnswers = question.answers;
+					/* Sorting answers */
+					allAnswers = allAnswers.sort(sortAnswers);
+					question.answers = allAnswers;
 
-							/* Populating the question's author */
-							$http.get('/api/user/v0/users/' + question.author).success(
-								function (res) {
-									question.author = res;
-									def.resolve(question);
-								});
-						});
+					/* Populating the question's author */
+					$http.get('/api/user/v0/users/' + question.author).success(
+						function (res) {
+							question.author = res;
+							def.resolve(question);
+						}
+					);
+
 				});
 				return def.promise;
 			},

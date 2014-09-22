@@ -90,27 +90,17 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 										/* For each question we have to check if the answer has been checked as solved */
 										async.each(question.answers, function (answer, eachCb) {
 
-											$http({
-												method: 'GET',
-												url: '/api/cobject/v0/answer/',
-												params: {
-													_id: answer,
-													select: 'checked'
-												}
-											}).success(function (answerOnlyChecked) {
-
-												if (answerOnlyChecked && answerOnlyChecked.data && answerOnlyChecked.data[0]) {
+												if (answer && answer.checked) {
 													if(question.isSolved){
 														eachCb()
 													}else{
-														question.isSolved = answerOnlyChecked.data[0].checked;
+														question.isSolved = answer.checked;
 														eachCb();
 													}
 
 												} else {
 													eachCb();
 												}
-											})
 										}, function (err) {
 											autoCb();
 										});
@@ -118,10 +108,9 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 
 									populateAuthor: function (autoCb) {
 
-										/* Populating question's tag */
-										tagService.populateTag(question);
+										/* Tag is already populated */
 
-										/* Populating question's author */
+										/* Populating question's author, populate only works between custom object relationships */
 										if (userCache[question.author]) {
 
 											setTimeout(function () {
@@ -220,10 +209,8 @@ app.controller('homeCtrl', ['$scope', '$rootScope', '$http', 'tagService',
 		$scope.questionParams = {
 			sort: '-dt_create',
 			page: page,
-			per_page: 10
+			per_page: 10,
+			populate: true
 		}
-
-		/* First request */
-		// $scope.loadQuestions($scope.questionParams);
 
 			}])
