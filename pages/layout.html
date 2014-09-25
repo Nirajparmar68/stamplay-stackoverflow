@@ -31,6 +31,7 @@
      profileImg = {{#if user._id}}"{{user.profileImg}}"{{else}}""{{/if}},
      displayName = {{#if user._id}}"{{user.displayName}}"{{else}}""{{/if}},
      assetsUrl = "{{assetsUrl}}";
+     appId = "{{appId}}";
   </script>
 
   <body ng-app="stamplay-stack">
@@ -165,6 +166,7 @@
       <!-- Handles menu -->  
       <script src="{{assetsUrl}}/assets/menuCtrl.js"></script>
 
+      <script src="{{assetsUrl}}/assets/pointsCtrl.js"></script>
       <script src="{{assetsUrl}}/assets/createQuestionCtrl.js"></script>
       <script src="{{assetsUrl}}/assets/tagsCtrl.js"></script>
       <script src="{{assetsUrl}}/assets/usersCtrl.js"></script>
