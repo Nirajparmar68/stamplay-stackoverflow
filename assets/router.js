@@ -40,7 +40,7 @@ var getURLParameters = function (name) {
 
 app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $sceDelegateProvider, $provide) {
 	/* Since templates are on AWS S3 we load templates from http whitelisting the assets URL */
-	$sceDelegateProvider.resourceUrlWhitelist(['self', 'https://cdn.stamplay.com/apps/'+ appId +'/assets/**']);
+	$sceDelegateProvider.resourceUrlWhitelist(['self', 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/**']);
 
 	/* Since Stamplay server side uses Handlebars, we are changing the Angular curly brackets in square brackets */
 	$interpolateProvider.startSymbol('[[');
@@ -66,18 +66,18 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 	/* Stamplay login route */
 	.when('/auth/v0/github/connect', {
 		controller: 'loginCtrl',
-		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
+		templateUrl: 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
 	})
 
 	/* Stamplay logout route */
 	.when('/auth/v0/logout', {
 		controller: 'logoutCtrl',
-		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
+		templateUrl: 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
 	})
 
 	/* Index route, shows a list of questions */
 	.when('/index', {
-		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateIndex.html',
+		templateUrl: 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/templateIndex.html',
 		controller: 'homeCtrl',
 		resolve: {
 			tag: function (tagService) {
@@ -89,7 +89,7 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 
 	/* Shows a question with the related answers */
 	.when('/answer', {
-		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateAnswer.html',
+		templateUrl: 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/templateAnswer.html',
 		controller: 'answerCtrl',
 		/* Dependencies */
 		resolve: {
@@ -137,13 +137,13 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 
 	/* Create a new question */
 	.when('/questions', {
-		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateQuestion.html',
+		templateUrl: 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/templateQuestion.html',
 		controller: 'createQuestionCtrl'
 	})
 
 	/* Shows all available tags */
 	.when('/tags', {
-		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateTags.html',
+		templateUrl: 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/templateTags.html',
 		controller: 'tagsCtrl',
 		resolve: {
 			tag: function (tagService) {
@@ -154,7 +154,7 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 
 	/* Shows all available users */
 	.when('/users', {
-		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateUsers.html',
+		templateUrl: 'https://s3-eu-west-1.amazonaws.com/cdn.stamplay.com/apps/'+ appId +'/assets/templateUsers.html',
 		controller: 'usersCtrl',
 		resolve: {
 			/* Getting all users */
