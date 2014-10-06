@@ -40,7 +40,7 @@ var getURLParameters = function (name) {
 
 app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $sceDelegateProvider, $provide) {
 	/* Since templates are on AWS S3 we load templates from http whitelisting the assets URL */
-	$sceDelegateProvider.resourceUrlWhitelist(['self', 'http://cdn.stamplay.com/apps/'+ appId +'/assets/**']);
+	$sceDelegateProvider.resourceUrlWhitelist(['self', 'https://cdn.stamplay.com/apps/'+ appId +'/assets/**']);
 
 	/* Since Stamplay server side uses Handlebars, we are changing the Angular curly brackets in square brackets */
 	$interpolateProvider.startSymbol('[[');
