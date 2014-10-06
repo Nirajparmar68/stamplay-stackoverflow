@@ -66,18 +66,18 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 	/* Stamplay login route */
 	.when('/auth/v0/github/connect', {
 		controller: 'loginCtrl',
-		templateUrl: 'http://cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
+		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
 	})
 
 	/* Stamplay logout route */
 	.when('/auth/v0/logout', {
 		controller: 'logoutCtrl',
-		templateUrl: 'http://cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
+		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateEmpty.html'
 	})
 
 	/* Index route, shows a list of questions */
 	.when('/index', {
-		templateUrl: 'http://cdn.stamplay.com/apps/'+ appId +'/assets/templateIndex.html',
+		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateIndex.html',
 		controller: 'homeCtrl',
 		resolve: {
 			tag: function (tagService) {
@@ -89,7 +89,7 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 
 	/* Shows a question with the related answers */
 	.when('/answer', {
-		templateUrl: 'http://cdn.stamplay.com/apps/'+ appId +'/assets/templateAnswer.html',
+		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateAnswer.html',
 		controller: 'answerCtrl',
 		/* Dependencies */
 		resolve: {
@@ -137,13 +137,13 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 
 	/* Create a new question */
 	.when('/questions', {
-		templateUrl: 'http://cdn.stamplay.com/apps/'+ appId +'/assets/templateQuestion.html',
+		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateQuestion.html',
 		controller: 'createQuestionCtrl'
 	})
 
 	/* Shows all available tags */
 	.when('/tags', {
-		templateUrl: 'http://cdn.stamplay.com/apps/'+ appId +'/assets/templateTags.html',
+		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateTags.html',
 		controller: 'tagsCtrl',
 		resolve: {
 			tag: function (tagService) {
@@ -154,7 +154,7 @@ app.config(function ($interpolateProvider, $routeProvider, $locationProvider, $s
 
 	/* Shows all available users */
 	.when('/users', {
-		templateUrl: 'http://cdn.stamplay.com/apps/'+ appId +'/assets/templateUsers.html',
+		templateUrl: 'https://cdn.stamplay.com/apps/'+ appId +'/assets/templateUsers.html',
 		controller: 'usersCtrl',
 		resolve: {
 			/* Getting all users */
