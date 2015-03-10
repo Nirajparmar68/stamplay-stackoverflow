@@ -1,7 +1,7 @@
 module.exports = {
 
 	options: {
-		separator: "\n/* ---- HALLO HALLO ---- */\n",
+		separator: "\n/* ---- HELLO HELLO ---- */\n",
 		stripBanners: {
 			block: true
 		},
@@ -10,41 +10,39 @@ module.exports = {
 
 	css: {
 		src: [
-    './assets/index.css',
-    './assets/question.css',
-    './assets/answer.css',
-    './assets/tags.css',
-    './assets/users.css',
-    './assets/footer.css',
-    './assets/sidebar.css',			
-    ],
-		dest: './assets/stamplay-stackoverflow.min.css',
+			'./css/index.css',
+			'./css/question.css',
+			'./css/answer.css',
+			'./css/tags.css',
+			'./css/users.css',
+			'./css/footer.css',
+			'./css/sidebar.css',
+		],
+		dest: './dist/stamplay-stackoverflow.min.css',
 	},
 
 	lib: {
 		src: [
-			'./assets/ng-infinite-scroll.js',
-			'./assets/ui-bootstrap-0.11.0.min.js',
-			'./assets/async.js',
-			'./assets/moment.js'
+			'./js/lib/ng-infinite-scroll.js',
+			'./js/lib/ui-bootstrap-0.11.0.min.js',
+			'./js/lib/async.js'
 		],
-		dest: './assets/libs.min.js'
+		dest: './dist/libs.min.js'
 	},
 
 	app: {
 		src: [
-      "./assets/loginCtrl.js",
-      "./assets/logoutCtrl.js",
-      "./assets/menuCtrl.js",
-      "./assets/pointsCtrl.js",
-      "./assets/createQuestionCtrl.js",
-      "./assets/tagsCtrl.js",
-      "./assets/usersCtrl.js",
-      "./assets/answerCtrl.js",
-		"./assets/answerEditCtrl.js",
-      "./assets/homeCtrl.js"
+			"./js/controllers/answerCtrl.js",
+			"./js/controllers/answerEditCtrl.js",
+			"./js/controllers/askCtrl.js",
+			"./js/controllers/homeCtrl.js",
+			"./js/controllers/loginCtrl.js",
+			"./js/controllers/logoutCtrl.js",
+			"./js/controllers/menuCtrl.js",
+			"./js/controllers/tagsCtrl.js",
+			"./js/controllers/usersCtrl.js"
 		],
-		dest: './assets/app.js'
+		dest: './dist/app.js'
 	}
 
 };
