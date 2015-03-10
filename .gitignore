@@ -43,8 +43,5 @@ lib-cov
 *.pid
 *.gz
 .idea
-assets/app.js
-assets/app.min.js
-assets/app.min.map
-assets/libs.min.js
-assets/stamplay-stackoverflow.min.css
+
+bower_components

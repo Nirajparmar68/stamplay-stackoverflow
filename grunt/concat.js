@@ -41,7 +41,7 @@ module.exports = {
       "./assets/tagsCtrl.js",
       "./assets/usersCtrl.js",
       "./assets/answerCtrl.js",
-      "./assets/answerCreatorCtrl.js",
+		"./assets/answerEditCtrl.js",
       "./assets/homeCtrl.js"
 		],
 		dest: './assets/app.js'

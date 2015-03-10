@@ -1,11 +1,12 @@
 stamplay-stackoverflow
 ======================
 
+
 ![Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.24.13.png "Stackoverflow")
 
 **Here at [Stamplay](https://stamplay.com) we really love [AngularJS](http://angularjs.org) so, after using it to create a [food ordering](https://github.com/Stamplay/stamplay-foodme) app like JustEat, we decided to use it again for our next tutorial. When it comes to solve any kind of unexpected problems while coding there is only one place that makes everyone confident about finding the right answer, and its name is [Stackoverflow](http://stackoverflow). So this time, as a tribute to this outstanding community, we dedicate this tutorial to it.**
 
-Here is what you will get: [https://bb76d7.stamplay.com](https://bb76d7.stamplay.com)
+Here is what you will get: [https://stackoverflow.stamplayapp.com](https://stackoverflow.stamplayapp.com)
 
 We love javascript and front end framework and this time we show you how you can create this app using [AngularJS](http://angularjs.org) to implement the client side logic. Here are the user stories for this example:
 
@@ -264,16 +265,11 @@ All tags are loaded through the service exposed when the controller starts. Angu
 All users are loaded through the service exposed when the controller starts. In case of search it will perform new requests to the server to fetch users accordingly with the desired search.
 
 ### Dependencies
-To complete the project we used the following great libs that you'll find in the `assets` folder of this tutorial:
+Run `bower install` 
 
-* Bootstrap 3.2.0
-* Font awesome 4.1.0
-* jQuery 1.11.1
-* Angular 1.2.21
-* Angular route 1.2.21
-* Angular ui-boostrap 0.11.0
-* Textangular 1.2.2
-* Async 0.9.0
+* ng-infinite-scroll
+* rangy
+* ui-bootstrap-0.11.0
 
 -----------------------
 

@@ -1,0 +1,1 @@
+angular.module('stack', ['stack.service', 'infinite-scroll', 'ngRoute', 'ui.router', 'ui.bootstrap', 'textAngular', 'ngStamplay'])

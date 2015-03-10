@@ -1,0 +1,26 @@
+{
+  "name": "stackoverflow",
+  "version": "0.0.0",
+  "authors": [
+    "Alessandro Oliveri <alessandro.oliveri@stamplay.com>"
+  ],
+  "description": "stackoverflow on stamplay",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "https://stackoverflow.stamplayapp.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "stamplay-sdk": "~0.0.7",
+    "async": "~0.9.2",
+    "bootstrap": "~3.3.2",
+    "jquery": "1.11.1",
+    "momentjs": "~2.9.0",
+    "angular-ui-router": "~0.2.13"
+  }
+}
