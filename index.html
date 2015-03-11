@@ -70,7 +70,7 @@
 
                 <div class="col-md-8 nav mainnavs">
                   <ul ng-controller="menuCtrl" class="nav nav-pills s-menu">
-                    <li ng-class="{youarehere : url == '/'}"><a href="/">Home</a></li>
+                    <li ng-class="{youarehere : url == '/'}"><a ui-sref="home">Home</a></li>
                     <li ng-class="{youarehere : url == '/tags'}"><a ui-sref="tags">Tags</a></li>
                     <li ng-class="{youarehere : url == '/users'}"><a ui-sref="users">Users</a></li>
                     <li ng-class="{youarehere : url == '/questions/ask'}"  
