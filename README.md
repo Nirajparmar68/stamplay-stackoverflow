@@ -221,16 +221,16 @@ _______________________________
 The Angular app is organized with a router, a service and some controllers to handle the front end logic. Let's analyze more in depth how they're defined.
 
 
-### Router (router.js)
+### Router (modeles/app.js)
 
-The router is responsible for markup interpolation (the tag that makes AngularJS react while parsing the DOM). Since Stamplay leverages the double curly bracket signature `{{}}` cause it leverages Handlebars for server-side page rendering we will tell Angular to look for the double square brackets signature `[[]]`. 
+The router is responsible for markup interpolation (the tag that makes AngularJS react while parsing the DOM).
 Anyway the main scope of the router is to list the urls that our AngularJS app need to resolve. The routes are:
 
 * `/auth/v0/github/connect`
 * `/auth/v0/logout`
-* `/answer[?id=question_id]`  - to show answers for a given question
-* `/index` - to show the home pages
-* `/questions` - to show questions
+* `/` - to show the home pages questions list
+* `/questions/:questionId`  - to show question details and answers
+* `/questions/ask` - to show the ask question form
 * `/tags` - to show tags
 * `/users` - to show users
 
@@ -246,16 +246,15 @@ Handles user login redirecting the browser to the auth start flow URL acting on 
 Handles user logout redirecting the browser to the logout URL acting on the `window.location.href` property.
 
 ##### Home controller (homeCtrl.js)
-`$scope` stores the `sort` criteria currently used to list the questions. (I.E: `sort: {newest: true, votes: false, active:false}`. When the controller starts `loadQuestion` is triggered and it loads questions, their authors and also checks if a "checked" (correct) answer already exists. `updateSortingOptions` is called when we need to change the sort criteria.
-
-##### Points controller (pointsCtrl.js)
-If the user is logged this controller fetches the user's points.
+Here is stores the `sort` criteria currently used to list the questions. When the controller starts `loadQuestion` is triggered and it loads questions, their authors and also checks if a "checked" (correct) answer already exists. 
+`loadNext` is triggered on user scroll to load more questions.
+`sortQuestion` is called when we need to change the sort criteria.
 
 ##### Answer controller (answerCtrl.js)
-This controller is responsible to enable/disable UI controls in the view that show the details and the answers of a question. It checks if the user looking at it is the author (so that he can eventually check answers as correct) or if the user previously voted for it. The main functions defined here are: `setChecked`, `comment`, `voteUp` and `voteDown`
+This controller is responsible to enable/disable UI controls in the view that show the details and the answers of a question. It checks if the user looking at it is the author (so that he can eventually check answers as correct) or if the user previously voted for it. The main functions defined here are: `setChecked`, `commentQuestion`,`commentAnswer`, `voteUp` and `voteDown`.
 
-##### Create Question controller (createQuestionCtrl.js)
-When this controller starts it initializes two variables in the `$scope`: `cobj` and `questionSubmitted`. The former represent the new instance for the question while the latter is a boolean value to check that the question has been submitted succesfully.
+##### Create Question controller (answerEditCtrl.js)
+The former represent the new instance for the question while the latter is a boolean value to check that the question has been submitted succesfully.
 It also implement the function `getTags` for autocompleting the tag that users can bind to the question.
 
 ##### Tags controller (tagsCtrl.js)
@@ -264,12 +263,29 @@ All tags are loaded through the service exposed when the controller starts. Angu
 ##### Users controller (usersCtrl.js)
 All users are loaded through the service exposed when the controller starts. In case of search it will perform new requests to the server to fetch users accordingly with the desired search.
 
+### Services
+
+##### Stamplay (angular-stamplay.js):
+stamplay-js-sdk.js Angular wrapper
+
+##### Answer Service (answersService.js):
+Manage the Answer models
+
+##### Question Service (questionsService.js)
+Manage the Question models
+
+##### Tags Service (tagsService.js)
+Manage the Tag models
+
+##### User Service (userService)
+Manage the User models and the Logged user interactions
+
+
 ### Dependencies
 Run `bower install` 
 
-* ng-infinite-scroll
-* rangy
-* ui-bootstrap-0.11.0
+* lib/ng-infinite-scroll
+* lib/ui-bootstrap-0.11.0
 
 -----------------------
 
@@ -287,10 +303,10 @@ In the Admin section you can edit and manage data saved by your app. Here you ca
 To build the app you need to have NPM installed and then run those two commands:
 
 	npm install
+	bower install
 	grunt build
 
-
-You will find the applications' controllers minified in assets/app.min.js and the application's css file in assets/stamplay-stackoverflow.min.css.
+You will find the application's controllers minified in dist/controllers.min.js, the application's services in services.min.js and the application's css file in dist/stylesheets.min.css
 
 
 -----------------------
