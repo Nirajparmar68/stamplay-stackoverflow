@@ -12,7 +12,14 @@
     <!-- Bootstrap core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/dist/stylesheets.min.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/question.css" rel="stylesheet">
+    <link href="/css/answer.css" rel="stylesheet">
+    <link href="/css/tags.css" rel="stylesheet">
+    <link href="/css/users.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/bower_components/textAngular/src/textAngular.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <base href="/">
@@ -104,8 +111,6 @@
         </div>
       </div>
 
-      <!-- ================================================== -->
-      <!-- Placed at the end of the document so the pages load faster -->
       <script src="/bower_components/stamplay-sdk/dist/stamplay.min.js"></script>
       <script src="/bower_components/jquery/dist/jquery.min.js"></script>
       <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -113,17 +118,35 @@
       <script src="/bower_components/angular-route/angular-route.min.js"></script>
       <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       
-      <script src="/dist/services.min.js"></script>
-      <script src="/dist/libs.min.js"></script>
-      <script src="/bower_components/async/lib/async.js"></script>
+      <script src="/js/services/main.js"></script>
+      <script src="/js/services/userService.js"></script>
+      <script src="/js/services/tagsService.js"></script>
+      <script src="/js/services/questionsService.js"></script>
+      <script src="/js/services/answersService.js"></script>
+      <script src="/js/services/angular-stamplay.js"></script>
+
+      <script src="/js/lib/ng-infinite-scroll.js"></script>
+      <script src="/js/lib/ui-bootstrap-0.11.0.min.js"></script>
 
       <script src='/bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
       <script src='/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
       <script src='/bower_components/textAngular/dist/textAngular.min.js'></script>
+
+      <script src="/bower_components/async/lib/async.js"></script>
+      <script src="/bower_components/momentjs/min/moment.min.js"></script>
       
       <!-- Defines angular app variable with the tag service -->  
       <script src="/js/modules/app.js"></script>
 
-      <script src="/dist/controllers.min.js"></script>
+      <script src="/js/controllers/loginCtrl.js"></script>
+      <script src="/js/controllers/logoutCtrl.js"></script>
+      <script src="/js/controllers/menuCtrl.js"></script>
+      <script src="/js/controllers/askCtrl.js"></script>
+      <script src="/js/controllers/tagsCtrl.js"></script>
+      <script src="/js/controllers/usersCtrl.js"></script>
+      <script src="/js/controllers/answerCtrl.js"></script>
+      <script src="/js/controllers/answerEditCtrl.js"></script>
+      <script src="/js/controllers/homeCtrl.js"></script>
+
   </body>
 </html>

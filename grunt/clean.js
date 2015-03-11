@@ -1,15 +1,23 @@
 module.exports = {
 
 	cssmin: {
-		src: ['assets/*.min.css']
+		src: ['dist/*.min.css']
 	},
 
 	lib: {
-		src: ['assets/libs.min.js']
+		src: ['dist/libs.min.js']
+	},
+
+	jsmin: {
+		src: ['dist/*.min.js']
+	},
+
+	js: {
+		src: ['dist/services.js', 'dist/controllers.js']
 	},
 
 	app: {
-		src: ['assets/app.min.js']
+		src: ['dist/app.min.js']
 	}
 
 };

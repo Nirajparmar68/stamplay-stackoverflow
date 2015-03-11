@@ -25,9 +25,17 @@ module.exports = function (grunt) {
 		'uglify:app'
 	]);
 
+	grunt.registerTask('buildDist', 'Create dist assets', [
+		'concat:controllers',
+		'concat:services',
+		'uglify:controllers',
+		'uglify:services',
+		'clean:js'
+	]);
+
 	//Builds everything
 	grunt.registerTask('build', 'Create Stamplay production ready project in /assets', function () {
-		grunt.task.run(['buildCss', 'buildlib', 'buildapp']);
+		grunt.task.run(['buildCss', 'buildlib', 'buildDist']);
 	});
 
 }
