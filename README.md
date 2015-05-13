@@ -320,10 +320,17 @@ Or download it as a zip file
 	
 	https://github.com/Stamplay/stamplay-stackoverflow/archive/master.zip 
 
-Then you need to upload the frontend files in your app and you can do it in two ways:
+Then you need to upload the frontend files in your app by using the [CLI tool](https://github.com/Stamplay/stamplay-cli):
 
-* Copy/Upload them via the Layout section of your app on Stamplay editor
-* [Get Stamplay sync](http://cdn.stamplay.com/stamplay-sync/stamplay-sync.zip) and run **Stamplay Sync**, make it download the frontend assets of your app and then replace them with the ones you got from this repo. Stamplay Sync will upload everything for you on your app.
+```js
+cd your/path/to/stamplay-hackenews
+stamplay init
+/*
+ * You will need to insert your appId and your API key
+ * and then copy front-end assets in the project folder
+ */
+stamplay deploy
+```
 
 
 -----------------------
