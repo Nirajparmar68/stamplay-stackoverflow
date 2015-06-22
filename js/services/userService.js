@@ -12,11 +12,11 @@ angular
 			},
 
 			login: function () {
-
+				user.login('github');
 			},
 
 			logout: function () {
-
+				user.logout('github');
 			},
 
 			getUserModel: function () {

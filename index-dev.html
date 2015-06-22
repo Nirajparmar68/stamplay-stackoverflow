@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-6 ng-cloak">
               <ul class="nav navbar-nav pull-right">
-                <li ng-hide="user.instance._id"><a href="/auth/v0/github/connect" style="color:white">Login</a></li>
+                <li ng-hide="user.instance._id"><a href="" ng-click="user.login('github')" style="color:white">Login</a></li>
                 <li class="dropdown pull-right"  ng-show="user.instance._id">
                   <a class="dropdown-toggle" data-toggle="dropdown">
                     {{user.instance.displayName}}
@@ -51,7 +51,7 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a href="/auth/v0/logout">Logout</a></li>
+                    <li><a href="" ng-click="user.logout()">Logout</a></li>
                   </ul>
                 </li>
             </ul>
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-      <script src="/bower_components/stamplay-sdk/dist/stamplay.min.js"></script>
+      <script src="/bower_components/stamplay-sdk/dist/stamplay.js"></script>
       <script src="/bower_components/jquery/dist/jquery.min.js"></script>
       <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script src="/bower_components/angular/angular.min.js"></script>
@@ -138,8 +138,6 @@
       <!-- Defines angular app variable with the tag service -->  
       <script src="/js/modules/app.js"></script>
 
-      <script src="/js/controllers/loginCtrl.js"></script>
-      <script src="/js/controllers/logoutCtrl.js"></script>
       <script src="/js/controllers/menuCtrl.js"></script>
       <script src="/js/controllers/askCtrl.js"></script>
       <script src="/js/controllers/tagsCtrl.js"></script>

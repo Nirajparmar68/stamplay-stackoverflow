@@ -67,16 +67,6 @@ angular
 						return usersService.getUsers();
 					}
 				}
-			})
-			.state('login', {
-				url: '/auth/v0/github/connect',
-				templateUrl: '/pages/empty.html',
-				controller: 'loginCtrl'
-			})
-			.state('logout', {
-				url: '/auth/v0/logout',
-				templateUrl: '/pages/empty.html',
-				controller: 'logoutCtrl'
 			});
 	})
 	/* 

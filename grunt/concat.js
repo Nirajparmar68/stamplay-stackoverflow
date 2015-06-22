@@ -37,8 +37,6 @@ module.exports = {
 			"js/controllers/answerEditCtrl.js",
 			"js/controllers/askCtrl.js",
 			"js/controllers/homeCtrl.js",
-			"js/controllers/loginCtrl.js",
-			"js/controllers/logoutCtrl.js",
 			"js/controllers/menuCtrl.js",
 			"js/controllers/tagsCtrl.js",
 			"js/controllers/usersCtrl.js"

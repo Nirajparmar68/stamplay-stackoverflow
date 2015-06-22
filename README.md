@@ -44,7 +44,7 @@ Go to [your account](http://editor.stamplay.com/apps) and create a new app.
 After creating a new app on [Stamplay](https://editor.stamplay.com) let's start by picking the component we need in our app. Lets see one-by-one how they are configured:
 
 ### User
-Since this is something for developers we decided to make our users signup with our last OAuth integration, Github. To get your own credentials go to [https://github.com/settings/applications](https://github.com/settings/applications) and click on "Register a new app". Fill the "Authorized Redirect URIs" with the URL: **https://[appId].stamplay.com/auth/v0/github/callback** and you'll have your ClientId and Secret to fill the fields as you can see from the image below. 
+Since this is something for developers we decided to make our users signup with our last OAuth integration, Github. To get your own credentials go to [https://github.com/settings/applications](https://github.com/settings/applications) and click on "Register a new app". Fill the "Authorized Redirect URIs" with the URL: **https://[appId].stamplayapp.com/auth/v1/github/callback** and you'll have your ClientId and Secret to fill the fields as you can see from the image below. 
 
 ![Github OAuth](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-16.27.56.png "Github OAuth")
 
@@ -81,9 +81,9 @@ the tags that can be associated to a question. These can be created only by the 
 
 After setting up this Stamplay will instantly expose Restful APIs for our newly resources the following URIs: 
 
-* `https://APPID.stamplay.com/api/cobject/v0/question`
-* `https://APPID.stamplay.com/api/cobject/v0/answer`
-* `https://APPID.stamplay.com/api/cobject/v0/tag`
+* `https://APPID.stamplayapp.com/api/cobject/v1/question`
+* `https://APPID.stamplayapp.com/api/cobject/v1/answer`
+* `https://APPID.stamplayapp.com/api/cobject/v1/tag`
 
 
 

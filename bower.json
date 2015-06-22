@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "stamplay-sdk": "~0.0.7",
+    "stamplay-sdk": "~1.1.0",
     "async": "~0.9.2",
     "bootstrap": "~3.3.2",
     "jquery": "1.11.1",
