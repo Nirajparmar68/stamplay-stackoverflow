@@ -159,7 +159,7 @@ Action: Gamification - Add Points
 	numpoints: 5
 	user: {{coinstance.author}}
 
-### When a question is down voted, its author loose 2 points (get -2)
+### When a question is down voted, its author lose 2 points (get -2)
 
 Trigger : Custom Object - Downvote
 
@@ -191,7 +191,7 @@ Action: Gamification - Add Points
 	numpoints: 10
 	user: {{coinstance.author}}
 
-### When an answer is down voted, its author loose 2 points (get -2)
+### When an answer is down voted, its author lose 2 points (get -2)
 
 Trigger : Custom Object - Downvote
 
