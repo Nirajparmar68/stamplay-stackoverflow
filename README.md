@@ -2,11 +2,11 @@ stamplay-stackoverflow
 ======================
 
 
-![Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.24.13.png "Stackoverflow")
+![Stackoverflow](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.24.13.png "Stackoverflow")
 
 **Here at [Stamplay](https://stamplay.com) we really love [AngularJS](http://angularjs.org) so, after using it to create a [food ordering](https://github.com/Stamplay/stamplay-foodme) app like JustEat, we decided to use it again for our next tutorial. When it comes to solve any kind of unexpected problems while coding there is only one place that makes everyone confident about finding the right answer, and its name is [Stackoverflow](http://stackoverflow). So this time, as a tribute to this outstanding community, we dedicate this tutorial to it.**
 
-Here is what you will get: [https://bb76d7.stamplay.com](https://bb76d7.stamplay.com)
+Here is what you will get: [https://stackoverflow.stamplayapp.com](https://stackoverflow.stamplayapp.com)
 
 We love javascript and front end framework and this time we show you how you can create this app using [AngularJS](http://angularjs.org) to implement the client side logic. Here are the user stories for this example:
 
@@ -20,7 +20,7 @@ We love javascript and front end framework and this time we show you how you can
 
 You get your own right now simply creating a new project on Stamplay, following this guide to understand how to configure it and then use the code on the Github repository.
 
-Feel free to implement more cool features, contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com)
+Feel free to implement more cool features, contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [support@stamplay.com](mailto:support@stamplay.com)
 
 
 -----------------------
@@ -28,11 +28,11 @@ Feel free to implement more cool features, contribute to this repo or clone it t
 
 This Stackoverflow clone is built around the following building blocks
 
-* [Users](https://www.stamplay.com/docs#user)
-* [Gamification](http://stamplay.com/docs#challenge-challenge)
-* [Custom Objects](https://www.stamplay.com/docs#customobject)
+* [Users](https://stamplay.com/docs/rest-api#user)
+* [Gamification](https://stamplay.com/docs/rest-api#gamification)
+* [Custom Objects](https://stamplay.com/docs/rest-api#custom-object-api)
 * Mailchimp
-* [Email](https://www.stamplay.com/docs#email)
+* [Email](https://stamplay.com/docs/rest-api#email-api)
 
 
 ## Requirements
@@ -44,11 +44,11 @@ Go to [your account](http://editor.stamplay.com/apps) and create a new app.
 After creating a new app on [Stamplay](https://editor.stamplay.com) let's start by picking the component we need in our app. Lets see one-by-one how they are configured:
 
 ### User
-Since this is something for developers we decided to make our users signup with our last OAuth integration, Github. To get your own credentials go to [https://github.com/settings/applications](https://github.com/settings/applications) and click on "Register a new app". Fill the "Authorized Redirect URIs" with the URL: **https://[appId].stamplay.com/auth/v0/github/callback** and you'll have your ClientId and Secret to fill the fields as you can see from the image below. 
+Since this is something for developers we decided to make our users signup with our last OAuth integration, Github. To get your own credentials go to [https://github.com/settings/applications](https://github.com/settings/applications) and click on "Register a new app". Fill the "Authorized Redirect URIs" with the URL: **https://[appId].stamplayapp.com/auth/v1/github/callback** and you'll have your ClientId and Secret to fill the fields as you can see from the image below. 
 
-![Github OAuth](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-16.27.56.png "Github OAuth")
+![Github OAuth](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-16.27.56.png "Github OAuth")
 
-![Github login](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.37.21.png "Github login")
+![Github login](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.37.21.png "Github login")
 
 
 ### Custom Object
@@ -65,7 +65,7 @@ Let's define the entities for this app, we will define **Question**, **Answer** 
 
 ##### Answer
 
-the answers posted in relation to a question. It has a simpler structure than the questions that is
+The answers posted in relation to a question. It has a simpler structure than the questions that is
 
 * Name: `author`, Type: `user_relation`, required, the author of the question (it will contain one user’s _id)
 * Name: `text`, Type: `string`, required, the answer’s body
@@ -73,7 +73,7 @@ the answers posted in relation to a question. It has a simpler structure than th
 
 ##### Tag
 
-the tags that can be associated to a question. These can be created only by the admin:
+The tags that can be associated to a question. These can be created only by the admin:
 
 * Name: `name`, Type: `string`, unique, required, tag's name
 * Name: `count`, Type: `number`, optional, how many questions have been tagged with the tag
@@ -81,9 +81,9 @@ the tags that can be associated to a question. These can be created only by the 
 
 After setting up this Stamplay will instantly expose Restful APIs for our newly resources the following URIs: 
 
-* `https://APPID.stamplay.com/api/cobject/v0/question`
-* `https://APPID.stamplay.com/api/cobject/v0/answer`
-* `https://APPID.stamplay.com/api/cobject/v0/tag`
+* `https://APPID.stamplayapp.com/api/cobject/v1/question`
+* `https://APPID.stamplayapp.com/api/cobject/v1/answer`
+* `https://APPID.stamplayapp.com/api/cobject/v1/tag`
 
 
 
@@ -94,7 +94,7 @@ User activity on Stackoverflow is rewarded with reputation points, this componen
 
 
 ### Email
-This component doesn't need any setup, couldn't be easier than that ;)
+This component doesn't need any setup and it's by default in the application, couldn't be easier than that ;)
 
 
 ### Mailchimp (optional)
@@ -159,7 +159,7 @@ Action: Gamification - Add Points
 	numpoints: 5
 	user: {{coinstance.author}}
 
-### When a question is down voted, its author loose 2 points (get -2)
+### When a question is down voted, its author lose 2 points (get -2)
 
 Trigger : Custom Object - Downvote
 
@@ -191,7 +191,7 @@ Action: Gamification - Add Points
 	numpoints: 10
 	user: {{coinstance.author}}
 
-### When an answer is down voted, its author loose 2 points (get -2)
+### When an answer is down voted, its author lose 2 points (get -2)
 
 Trigger : Custom Object - Downvote
 
@@ -210,7 +210,7 @@ Action: Gamification - Add Points
 
  After finishing all those configurations your task view will look like this one:
  
- ![Tasks Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-15-alle-12.48.05.png "Tasks Stackoverflow")
+ ![Tasks Stackoverflow](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-15-alle-12.48.05.png "Tasks Stackoverflow")
 
 
 _______________________________
@@ -221,16 +221,14 @@ _______________________________
 The Angular app is organized with a router, a service and some controllers to handle the front end logic. Let's analyze more in depth how they're defined.
 
 
-### Router (router.js)
+### Router (modeles/app.js)
 
-The router is responsible for markup interpolation (the tag that makes AngularJS react while parsing the DOM). Since Stamplay leverages the double curly bracket signature `{{}}` cause it leverages Handlebars for server-side page rendering we will tell Angular to look for the double square brackets signature `[[]]`. 
+The router is responsible for markup interpolation (the tag that makes AngularJS react while parsing the DOM).
 Anyway the main scope of the router is to list the urls that our AngularJS app need to resolve. The routes are:
 
-* `/auth/v0/github/connect`
-* `/auth/v0/logout`
-* `/answer[?id=question_id]`  - to show answers for a given question
-* `/index` - to show the home pages
-* `/questions` - to show questions
+* `/` - to show the home pages questions list
+* `/questions/:questionId`  - to show question details and answers
+* `/questions/ask` - to show the ask question form
 * `/tags` - to show tags
 * `/users` - to show users
 
@@ -239,23 +237,16 @@ When routes are initialized, AngularJS start the app injecting in the `rootScope
 
 ### Controllers
 
-##### Login controller (loginCtrl.js):
-Handles user login redirecting the browser to the auth start flow URL acting on the `window.location.href` property.
-
-##### Logout controller (logoutCtrl.js):
-Handles user logout redirecting the browser to the logout URL acting on the `window.location.href` property.
-
 ##### Home controller (homeCtrl.js)
-`$scope` stores the `sort` criteria currently used to list the questions. (I.E: `sort: {newest: true, votes: false, active:false}`. When the controller starts `loadQuestion` is triggered and it loads questions, their authors and also checks if a "checked" (correct) answer already exists. `updateSortingOptions` is called when we need to change the sort criteria.
-
-##### Points controller (pointsCtrl.js)
-If the user is logged this controller fetches the user's points.
+Here is stores the `sort` criteria currently used to list the questions. When the controller starts `loadQuestion` is triggered and it loads questions, their authors and also checks if a "checked" (correct) answer already exists. 
+`loadNext` is triggered on user scroll to load more questions.
+`sortQuestion` is called when we need to change the sort criteria.
 
 ##### Answer controller (answerCtrl.js)
-This controller is responsible to enable/disable UI controls in the view that show the details and the answers of a question. It checks if the user looking at it is the author (so that he can eventually check answers as correct) or if the user previously voted for it. The main functions defined here are: `setChecked`, `comment`, `voteUp` and `voteDown`
+This controller is responsible to enable/disable UI controls in the view that show the details and the answers of a question. It checks if the user looking at it is the author (so that he can eventually check answers as correct) or if the user previously voted for it. The main functions defined here are: `setChecked`, `commentQuestion`,`commentAnswer`, `voteUp` and `voteDown`.
 
-##### Create Question controller (createQuestionCtrl.js)
-When this controller starts it initializes two variables in the `$scope`: `cobj` and `questionSubmitted`. The former represent the new instance for the question while the latter is a boolean value to check that the question has been submitted succesfully.
+##### Create Question controller (answerEditCtrl.js)
+The former represent the new instance for the question while the latter is a boolean value to check that the question has been submitted succesfully.
 It also implement the function `getTags` for autocompleting the tag that users can bind to the question.
 
 ##### Tags controller (tagsCtrl.js)
@@ -264,17 +255,29 @@ All tags are loaded through the service exposed when the controller starts. Angu
 ##### Users controller (usersCtrl.js)
 All users are loaded through the service exposed when the controller starts. In case of search it will perform new requests to the server to fetch users accordingly with the desired search.
 
-### Dependencies
-To complete the project we used the following great libs that you'll find in the `assets` folder of this tutorial:
+### Services
 
-* Bootstrap 3.2.0
-* Font awesome 4.1.0
-* jQuery 1.11.1
-* Angular 1.2.21
-* Angular route 1.2.21
-* Angular ui-boostrap 0.11.0
-* Textangular 1.2.2
-* Async 0.9.0
+##### Stamplay (angular-stamplay.js):
+stamplay-js-sdk.js Angular wrapper
+
+##### Answer Service (answersService.js):
+Manage the Answer models
+
+##### Question Service (questionsService.js)
+Manage the Question models
+
+##### Tags Service (tagsService.js)
+Manage the Tag models
+
+##### User Service (userService)
+Manage the User models and the Logged user interactions
+
+
+### Dependencies
+Run `bower install` 
+
+* lib/ng-infinite-scroll
+* lib/ui-bootstrap-0.11.0
 
 -----------------------
 
@@ -292,10 +295,10 @@ In the Admin section you can edit and manage data saved by your app. Here you ca
 To build the app you need to have NPM installed and then run those two commands:
 
 	npm install
+	bower install
 	grunt build
 
-
-You will find the applications' controllers minified in assets/app.min.js and the application's css file in assets/stamplay-stackoverflow.min.css.
+You will find the application's controllers minified in dist/controllers.min.js, the application's services in services.min.js and the application's css file in dist/stylesheets.min.css
 
 
 -----------------------
@@ -309,10 +312,17 @@ Or download it as a zip file
 	
 	https://github.com/Stamplay/stamplay-stackoverflow/archive/master.zip 
 
-Then you need to upload the frontend files in your app and you can do it in two ways:
+Then you need to upload the frontend files in your app by using the [CLI tool](https://github.com/Stamplay/stamplay-cli):
 
-* Copy/Upload them via the Layout section of your app on Stamplay editor
-* [Get Stamplay sync](http://cdn.stamplay.com/stamplay-sync/stamplay-sync.zip) and run **Stamplay Sync**, make it download the frontend assets of your app and then replace them with the ones you got from this repo. Stamplay Sync will upload everything for you on your app.
+```js
+cd your/path/to/stamplay-stackoverflow
+stamplay init
+/*
+ * You will need to insert your appId and your API key
+ * and then copy front-end assets in the project folder
+ */
+stamplay deploy
+```
 
 
 -----------------------
@@ -323,6 +333,6 @@ Here are a few ideas for further improvement :
 * Add a search bar to quickly navigate thourgh all the questions as Stackoverflow does
 * _Your idea here… ?_
 
-Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
+Again, for any questions drop an email to [support@stamplay.com](mailto:support@stamplay.com) :)
 
 Ciao!

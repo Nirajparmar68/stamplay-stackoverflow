@@ -4,12 +4,27 @@ module.exports = {
     preserveComments: false
   },
 
+  'controllers': {
+    files: [{
+      src: 'dist/controllers.js',
+      dest: 'dist/controllers.min.js'
+    }]
+  },
+
+  'services': {
+    files: [{
+      src: 'dist/services.js',
+      dest: 'dist/services.min.js'
+    }]
+  },
+
+
   'lib': {
     options: {
       sourceMap: false
     },
     files: {
-      './assets/libs.min.js': ['./assets/libs.min.js']
+      'dist/libs.min.js': ['dist/libs.min.js']
     }
   },
 

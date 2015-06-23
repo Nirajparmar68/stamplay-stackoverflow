@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Stackoverflow | Stamplay app</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/question.css" rel="stylesheet">
+    <link href="/css/answer.css" rel="stylesheet">
+    <link href="/css/tags.css" rel="stylesheet">
+    <link href="/css/users.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/bower_components/textAngular/src/textAngular.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <base href="/">
+  </head>
+
+  <body ng-app="stack">
+
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+
+          <a href="https://github.com/Stamplay/stamplay-stackoverflow" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+          <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+              <a href="https://stamplay.com" target="_blank">
+                <img 
+                  src="/img/stamplay-logo-v2.png" 
+                  style="width:102px; height: 19px; margin-top: 6px;"/>
+              </a>
+            </div>
+            <div class="col-md-6 ng-cloak">
+              <ul class="nav navbar-nav pull-right">
+                <li ng-hide="user.instance._id"><a href="" ng-click="user.login('github')" style="color:white">Login</a></li>
+                <li class="dropdown pull-right"  ng-show="user.instance._id">
+                  <a class="dropdown-toggle" data-toggle="dropdown">
+                    {{user.instance.displayName}}
+                    <img ng-src="{{user.instance.profileImg}}" style="width:24px; height:24px; margin-left:20px;">
+                    {{user.totalPoints || 0}}
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="" ng-click="user.logout()">Logout</a></li>
+                  </ul>
+                </li>
+            </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+       <div class="container" style="padding-bottom: 30px;">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="header">
+
+              <div class="row" style="margin-top:50px; margin-bottom:20px;">
+                <div class="col-md-4">
+                  <div id="hlogo">
+                    <a href="/" style="margin-top:-34px;"></a>
+                  </div>
+                  <h3 style="display: inline;color:#000;font-size: 30px;" 
+                      class="text-muted">clone</h3>
+                </div>
+
+                <div class="col-md-8 nav mainnavs">
+                  <ul ng-controller="menuCtrl" class="nav nav-pills s-menu">
+                    <li ng-class="{youarehere : url == '/'}"><a ui-sref="home">Home</a></li>
+                    <li ng-class="{youarehere : url == '/tags'}"><a ui-sref="tags">Tags</a></li>
+                    <li ng-class="{youarehere : url == '/users'}"><a ui-sref="users">Users</a></li>
+                    <li ng-class="{youarehere : url == '/questions/ask'}"  
+                      class="pull-right"
+                      ng-show="user.instance._id">
+                      <a ui-sref="ask">Ask a question</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div ui-view></div>
+          </div>
+        </div>
+      </div> <!-- /container -->
+
+      <div id="footer" class="categories">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div id="footer-menu">
+                <div class="top-footer-links">
+                  <a href="https://stamplay.com" target="_blank">Our Website</a>
+                  <a href="https://editor.stamplay.com" target="_blank">Try it now</a>
+                  <a href="https://www.stamplay.com/docs" target="_blank">API Docs</a>
+                  <!-- TOP FOOTER LINKS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="/bower_components/stamplay-sdk/dist/stamplay.js"></script>
+      <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="/bower_components/angular/angular.min.js"></script>
+      <script src="/bower_components/angular-route/angular-route.min.js"></script>
+      <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      
+      <script src="/js/services/main.js"></script>
+      <script src="/js/services/userService.js"></script>
+      <script src="/js/services/tagsService.js"></script>
+      <script src="/js/services/questionsService.js"></script>
+      <script src="/js/services/answersService.js"></script>
+      <script src="/js/services/angular-stamplay.js"></script>
+
+      <script src="/js/lib/ng-infinite-scroll.js"></script>
+      <script src="/js/lib/ui-bootstrap-0.11.0.min.js"></script>
+
+      <script src='/bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
+      <script src='/bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+      <script src='/bower_components/textAngular/dist/textAngular.min.js'></script>
+
+      <script src="/bower_components/async/lib/async.js"></script>
+      <script src="/bower_components/momentjs/min/moment.min.js"></script>
+      
+      <!-- Defines angular app variable with the tag service -->  
+      <script src="/js/modules/app.js"></script>
+
+      <script src="/js/controllers/menuCtrl.js"></script>
+      <script src="/js/controllers/askCtrl.js"></script>
+      <script src="/js/controllers/tagsCtrl.js"></script>
+      <script src="/js/controllers/usersCtrl.js"></script>
+      <script src="/js/controllers/answerCtrl.js"></script>
+      <script src="/js/controllers/answerEditCtrl.js"></script>
+      <script src="/js/controllers/homeCtrl.js"></script>
+
+  </body>
+</html>

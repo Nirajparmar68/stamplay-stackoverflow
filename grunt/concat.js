@@ -10,41 +10,50 @@ module.exports = {
 
 	css: {
 		src: [
-    './assets/index.css',
-    './assets/question.css',
-    './assets/answer.css',
-    './assets/tags.css',
-    './assets/users.css',
-    './assets/footer.css',
-    './assets/sidebar.css',			
-    ],
-		dest: './assets/stamplay-stackoverflow.min.css',
+			'css/index.css',
+			'css/question.css',
+			'css/answer.css',
+			'css/tags.css',
+			'css/users.css',
+			'css/footer.css',
+			'css/sidebar.css',
+			'bower_components/textAngular/src/textAngular.css'
+		],
+		dest: './dist/stylesheets.min.css',
 	},
 
 	lib: {
 		src: [
-			'./assets/ng-infinite-scroll.js',
-			'./assets/ui-bootstrap-0.11.0.min.js',
-			'./assets/async.js',
-			'./assets/moment.js'
+			'js/lib/ng-infinite-scroll.js',
+			'js/lib/ui-bootstrap-0.11.0.min.js',
+			'/bower_components/momentjs/min/moment.min.js'
 		],
-		dest: './assets/libs.min.js'
+		dest: './dist/libs.min.js'
 	},
 
-	app: {
+	controllers: {
 		src: [
-      "./assets/loginCtrl.js",
-      "./assets/logoutCtrl.js",
-      "./assets/menuCtrl.js",
-      "./assets/pointsCtrl.js",
-      "./assets/createQuestionCtrl.js",
-      "./assets/tagsCtrl.js",
-      "./assets/usersCtrl.js",
-      "./assets/answerCtrl.js",
-      "./assets/answerCreatorCtrl.js",
-      "./assets/homeCtrl.js"
+			"js/controllers/answerCtrl.js",
+			"js/controllers/answerEditCtrl.js",
+			"js/controllers/askCtrl.js",
+			"js/controllers/homeCtrl.js",
+			"js/controllers/menuCtrl.js",
+			"js/controllers/tagsCtrl.js",
+			"js/controllers/usersCtrl.js"
 		],
-		dest: './assets/app.js'
+		dest: './dist/controllers.js'
+	},
+
+	services: {
+		src: [
+			"js/services/main.js",
+			"js/services/userService.js",
+			"js/services/tagsService.js",
+			"js/services/questionsService.js",
+			"js/services/answersService.js",
+			"js/services/angular-stamplay.js"
+		],
+		dest: './dist/services.js'
 	}
 
 };
