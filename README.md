@@ -2,7 +2,7 @@ stamplay-stackoverflow
 ======================
 
 
-![Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.24.13.png "Stackoverflow")
+![Stackoverflow](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.24.13.png "Stackoverflow")
 
 **Here at [Stamplay](https://stamplay.com) we really love [AngularJS](http://angularjs.org) so, after using it to create a [food ordering](https://github.com/Stamplay/stamplay-foodme) app like JustEat, we decided to use it again for our next tutorial. When it comes to solve any kind of unexpected problems while coding there is only one place that makes everyone confident about finding the right answer, and its name is [Stackoverflow](http://stackoverflow). So this time, as a tribute to this outstanding community, we dedicate this tutorial to it.**
 
@@ -20,7 +20,7 @@ We love javascript and front end framework and this time we show you how you can
 
 You get your own right now simply creating a new project on Stamplay, following this guide to understand how to configure it and then use the code on the Github repository.
 
-Feel free to implement more cool features, contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com)
+Feel free to implement more cool features, contribute to this repo or clone it to use it by your own scopes. For any question drop an email to [support@stamplay.com](mailto:support@stamplay.com)
 
 
 -----------------------
@@ -28,11 +28,11 @@ Feel free to implement more cool features, contribute to this repo or clone it t
 
 This Stackoverflow clone is built around the following building blocks
 
-* [Users](https://www.stamplay.com/docs#user)
-* [Gamification](http://stamplay.com/docs#challenge-challenge)
-* [Custom Objects](https://www.stamplay.com/docs#customobject)
+* [Users](https://stamplay.com/docs/rest-api#user)
+* [Gamification](https://stamplay.com/docs/rest-api#gamification)
+* [Custom Objects](https://stamplay.com/docs/rest-api#custom-object-api)
 * Mailchimp
-* [Email](https://www.stamplay.com/docs#email)
+* [Email](https://stamplay.com/docs/rest-api#email-api)
 
 
 ## Requirements
@@ -46,9 +46,9 @@ After creating a new app on [Stamplay](https://editor.stamplay.com) let's start 
 ### User
 Since this is something for developers we decided to make our users signup with our last OAuth integration, Github. To get your own credentials go to [https://github.com/settings/applications](https://github.com/settings/applications) and click on "Register a new app". Fill the "Authorized Redirect URIs" with the URL: **https://[appId].stamplayapp.com/auth/v1/github/callback** and you'll have your ClientId and Secret to fill the fields as you can see from the image below. 
 
-![Github OAuth](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-16.27.56.png "Github OAuth")
+![Github OAuth](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-16.27.56.png "Github OAuth")
 
-![Github login](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.37.21.png "Github login")
+![Github login](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-09-alle-15.37.21.png "Github login")
 
 
 ### Custom Object
@@ -65,7 +65,7 @@ Let's define the entities for this app, we will define **Question**, **Answer** 
 
 ##### Answer
 
-the answers posted in relation to a question. It has a simpler structure than the questions that is
+The answers posted in relation to a question. It has a simpler structure than the questions that is
 
 * Name: `author`, Type: `user_relation`, required, the author of the question (it will contain one user’s _id)
 * Name: `text`, Type: `string`, required, the answer’s body
@@ -73,7 +73,7 @@ the answers posted in relation to a question. It has a simpler structure than th
 
 ##### Tag
 
-the tags that can be associated to a question. These can be created only by the admin:
+The tags that can be associated to a question. These can be created only by the admin:
 
 * Name: `name`, Type: `string`, unique, required, tag's name
 * Name: `count`, Type: `number`, optional, how many questions have been tagged with the tag
@@ -94,7 +94,7 @@ User activity on Stackoverflow is rewarded with reputation points, this componen
 
 
 ### Email
-This component doesn't need any setup, couldn't be easier than that ;)
+This component doesn't need any setup and it's by default in the application, couldn't be easier than that ;)
 
 
 ### Mailchimp (optional)
@@ -159,7 +159,7 @@ Action: Gamification - Add Points
 	numpoints: 5
 	user: {{coinstance.author}}
 
-### When a question is down voted, its author loose 2 points (get -2)
+### When a question is down voted, its author lose 2 points (get -2)
 
 Trigger : Custom Object - Downvote
 
@@ -191,7 +191,7 @@ Action: Gamification - Add Points
 	numpoints: 10
 	user: {{coinstance.author}}
 
-### When an answer is down voted, its author loose 2 points (get -2)
+### When an answer is down voted, its author lose 2 points (get -2)
 
 Trigger : Custom Object - Downvote
 
@@ -210,7 +210,7 @@ Action: Gamification - Add Points
 
  After finishing all those configurations your task view will look like this one:
  
- ![Tasks Stackoverflow](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-15-alle-12.48.05.png "Tasks Stackoverflow")
+ ![Tasks Stackoverflow](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-15-alle-12.48.05.png "Tasks Stackoverflow")
 
 
 _______________________________
@@ -226,8 +226,6 @@ The Angular app is organized with a router, a service and some controllers to ha
 The router is responsible for markup interpolation (the tag that makes AngularJS react while parsing the DOM).
 Anyway the main scope of the router is to list the urls that our AngularJS app need to resolve. The routes are:
 
-* `/auth/v0/github/connect`
-* `/auth/v0/logout`
 * `/` - to show the home pages questions list
 * `/questions/:questionId`  - to show question details and answers
 * `/questions/ask` - to show the ask question form
@@ -238,12 +236,6 @@ When routes are initialized, AngularJS start the app injecting in the `rootScope
 
 
 ### Controllers
-
-##### Login controller (loginCtrl.js):
-Handles user login redirecting the browser to the auth start flow URL acting on the `window.location.href` property.
-
-##### Logout controller (logoutCtrl.js):
-Handles user logout redirecting the browser to the logout URL acting on the `window.location.href` property.
 
 ##### Home controller (homeCtrl.js)
 Here is stores the `sort` criteria currently used to list the questions. When the controller starts `loadQuestion` is triggered and it loads questions, their authors and also checks if a "checked" (correct) answer already exists. 
@@ -323,7 +315,7 @@ Or download it as a zip file
 Then you need to upload the frontend files in your app by using the [CLI tool](https://github.com/Stamplay/stamplay-cli):
 
 ```js
-cd your/path/to/stamplay-hackenews
+cd your/path/to/stamplay-stackoverflow
 stamplay init
 /*
  * You will need to insert your appId and your API key
@@ -341,6 +333,6 @@ Here are a few ideas for further improvement :
 * Add a search bar to quickly navigate thourgh all the questions as Stackoverflow does
 * _Your idea here… ?_
 
-Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
+Again, for any questions drop an email to [support@stamplay.com](mailto:support@stamplay.com) :)
 
 Ciao!
