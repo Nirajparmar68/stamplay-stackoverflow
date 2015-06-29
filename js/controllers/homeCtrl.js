@@ -30,7 +30,7 @@ angular
 							})
 						} else {
 							homeModel.questions = result;
-							homeModel.totalLength = homeModel.questions.totalElement;
+							homeModel.totalLength = homeModel.questions.totalElements;
 						}
 
 						homeModel.page++;
