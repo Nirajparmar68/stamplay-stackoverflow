@@ -54,13 +54,13 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <span ng-repeat="tag in q.instance.tags"><a class="post-tag">{{tag.instance.name}}</a></span>
+                <span ng-repeat="tag in q.instance.tags"><a class="post-tag">{{tag.name}}</a></span>
               </div>
               <div class="col-md-6 pull-right" ng-hide="sort.active">
-                asked {{q.instance.dt_create | date:"mediumDate"}} by {{q.instance.author.instance.displayName}}
+                asked {{q.instance.dt_create | date:"mediumDate"}} by  {{q.instance.author.displayName || q.instance.author.identities.github._json.login || 'name not shared'}} 
               </div>
               <div class="col-md-6 pull-right" ng-show="sort.active">
-                updated {{q.instance.dt_update | date:"mediumDate"}} by {{q.instance.author.instance.displayName}}
+                updated {{q.instance.dt_update | date:"mediumDate"}} by {{q.instance.author.displayName || q.instance.author.identities.github._json.login || 'name not shared'}} 
               </div>          
             </div>
           </div>

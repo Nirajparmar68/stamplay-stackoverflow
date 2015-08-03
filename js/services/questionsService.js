@@ -19,52 +19,11 @@ angular
 
 					questionsList.fetch(param, true)
 						.then(function () {
-							async.each(questionsList.instance,
-								function (question, callback) {
-
-									async.parallel([
-										function (paralleCallback) {
-											usersService.getById(question.get('author'))
-												.then(function (authorModel) {
-													question.set('author', authorModel);
-													paralleCallback();
-												})
-												.catch(function (err) {
-													paralleCallback(err);
-												});
-										},
-										function (paralleCallback) {
-											if (question.get('tags').length) {
-												tagsService.getById(question.get('tags')[0])
-													.then(function (tagModel) {
-														question.set('tags', [tagModel]);
-														paralleCallback();
-													})
-													.catch(function (err) {
-														paralleCallback(err);
-													});
-											} else {
-												paralleCallback();
-											}
-										},
-									], function (err) {
-										callback(err)
-									})
-
-								},
-								function (err) {
-									if (err) {
-										def.reject(err);
-									} else {
-										questionsLoaded = questionsList;
-										def.resolve(questionsList);
-									}
-								});
-						})
-						.catch(function (err) {
-							def.reject(err);
+							questionsList.instance.forEach(function (question) {
+								question.set('author', question.get('owner'));
+								def.resolve(questionsList);
+							});
 						});
-
 					return def.promise;
 				},
 
@@ -160,6 +119,7 @@ angular
 					actualViews++;
 					questionModel.set('_id', question.get('_id'));
 					questionModel.set('views', actualViews);
+					questionModel.set('owner', question.get('owner'));
 
 					question.set('views', actualViews);
 
@@ -318,5 +278,4 @@ angular
 				}
 
 			};
-		}
-	]);
+	}]);
