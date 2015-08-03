@@ -74,6 +74,7 @@ angular
 						askModel.cobj.answers = [];
 						askModel.cobj.views = 0;
 						askModel.cobj.author = $rootScope.user.id;
+						askModel.cobj.owner = $rootScope.user.id;
 						askModel.cobj.text = '';
 						askModel.current = '';
 						askModel.questionSubmitted = true;

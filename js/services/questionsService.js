@@ -119,6 +119,7 @@ angular
 					actualViews++;
 					questionModel.set('_id', question.get('_id'));
 					questionModel.set('views', actualViews);
+					questionModel.set('owner', question.get('owner'));
 
 					question.set('views', actualViews);
 
