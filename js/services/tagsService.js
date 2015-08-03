@@ -8,13 +8,14 @@ angular
 
 		return {
 
-			getTags: function () {
+			getTags: function (options) {
 				var def = $q.defer();
 
 				if (tags.length) {
 					def.resolve(tags)
 				} else {
-					tags.fetch()
+					options = options || {};
+					tags.fetch(options)
 						.then(function () {
 							def.resolve(tags);
 						})

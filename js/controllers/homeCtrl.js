@@ -32,9 +32,7 @@ angular
 							homeModel.questions = result;
 							homeModel.totalLength = homeModel.questions.totalElement;
 						}
-
 						homeModel.page++;
-
 						homeModel.busy = false;
 					});
 			};
@@ -45,7 +43,9 @@ angular
 					var params = {
 						sort: homeModel.sort,
 						page: page,
-						per_page: homeModel.per_page
+						per_page: homeModel.per_page,
+						populate_owner: true,
+						populate: true
 					}
 
 					homeModel.loadQuestions(params);
@@ -76,7 +76,9 @@ angular
 				homeModel.loadQuestions({
 					sort: homeModel.sort,
 					page: homeModel.page,
-					per_page: homeModel.per_page
+					per_page: homeModel.per_page,
+					populate_owner: true,
+					populate: true
 				});
 			};
 		}
