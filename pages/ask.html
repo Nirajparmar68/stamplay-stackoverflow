@@ -23,23 +23,27 @@
 
     <div class="row">
       <div class="col-md-12">
-        <h2>Tag {{current | json}}</h2> 
+        <h2>Tag {{current}}</h2> 
         <input 
           type="text" 
           ng-model="askModel.current"
           placeholder="Tags" 
-          typeahead="tags.name for tags in askModel.getTags($viewValue)" 
+          uib-typeahead="tags.name for tags in askModel.getTags($viewValue)" 
           typeahead-on-select="askModel.onSelect($item, $model, $label)"
-          typeahead-loading="askModel.loadingLocations" class="form-control">
+          typeahead-loading="askModel.loadingLocations"
+          typeahead-select-on-exact="true",
+          typeahead-wait-ms="300"
+          class="form-control">
         <input ng-model="askModel.cobj.tags" type="text" style="display:none">
-
+        <br>
+        <span ng-repeat="tag in askModel.selected track by $index" class="post-tag" ng-click="askModel.removeTag($index)">{{tag.name}} <i class="fa fa-times-circle"></i></span>
         <i ng-show="askModel.loadingLocations" class="glyphicon glyphicon-refresh"></i>
       </div>
     </div>
 
     <div class="row" ng-hide="askModel.questionSubmitted">
       <div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-        <div  class="btn btn-primary pull-right" ng-click="askModel.createQuestion()">Submit</div>
+        <div class="btn btn-primary pull-right" ng-disabled="askModel.busy" ng-click="askModel.createQuestion()">Submit  <i ng-show="askModel.busy" class="fa fa-spinner fa-spin" style="color:#ddd"></i></div>
       </div>
     </div>
 

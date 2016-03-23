@@ -14,7 +14,7 @@ angular
 				userService.getUserModel()
 					.then(function (response) {
 						answModel.user = response;
-						answModel.newAnswer.author = response.get('id')
+						answModel.newAnswer.author = response._id
 					})
 			}
 
@@ -24,8 +24,9 @@ angular
 			answModel.createAnswer = function (questionModel) {
 				answersService.createAnswer(answModel.newAnswer)
 					.then(function (nAnswer) {
-						nAnswer.set('author', answModel.user);
-						nAnswer.set('dt_create', moment(nAnswer.get('dt_create')).format('ll'));
+
+						nAnswer.author = answModel.user;
+						nAnswer.dt_create = moment(nAnswer.dt_create).format('ll');
 
 						questionsService.submitAnswer(questionModel, nAnswer)
 							.then(function () {
@@ -37,16 +38,16 @@ angular
 								})
 							})
 							.catch(function (err) {
+								console.log(err)
 								answModel.errorInCreation = true;
 								setTimeout(function () {
 									answModel.successInCreation = false;
 								}, 2000);
-								alert('KO');
 							});
 
 					}).catch(function (err) {
+						console.log(err)
 						answModel.errorInCreation = true;
-						alert('KO')
 					});
 			}
 

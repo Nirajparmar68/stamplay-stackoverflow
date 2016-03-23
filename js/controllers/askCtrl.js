@@ -16,12 +16,13 @@ angular
 			var askModel = this;
 			askModel.cobj = {};
 			askModel.cobj.tags = [];
+			askModel.selected = [];
 			askModel.cobj.answers = [];
 			askModel.cobj.views = 0;
 			askModel.questionSubmitted = false;
 
 			userService.getUserModel().then(function (response) {
-				askModel.cobj.author = response.get('_id');
+				askModel.cobj.author = response._id;
 			});
 
 			askModel.tags = [];
@@ -29,44 +30,42 @@ angular
 
 			/* Used from typeahead to retrieve tags that matches the user search */
 			askModel.getTags = function (val) {
+				askModel.tags.length = 0;
+
 				var reg = '".*' + val + '.*"';
 				var query = {
 					'where': '{"name": {"$regex" : ' + reg + '}}'
 				};
 
 				return tagsService.searchTag(query)
-					.then(function (tagsRetrived) {
-						tagsRetrived.forEach(function (tagItem) {
-							var instance = tagItem.instance;
-							tagName2Id[instance.name] = instance.id;
-							var alreadyExists = false;
-							for (var i = 0, j = askModel.tags.length; i < j && !alreadyExists; i++) {
-								var element = askModel.tags[i];
-								if (element.id === instance.id) {
-									alreadyExists = true;
+					.then(function (res) {
+						askModel.tags = res.map(function(tag) {
+							if(askModel.cobj.tags.indexOf(tag._id) < 0) {
+								return {
+									name : tag.name,
+									_id : tag._id
 								}
 							}
-							if (!alreadyExists) {
-								askModel.tags.push({
-									name: instance.name,
-									id: instance._id
-								});
-							}
-						});
-						return askModel.tags;
+						})
+
+						return _.without(askModel.tags, undefined);
 					});
 			};
 
-			askModel.onSelect = function ($item, $model, $label) { //jshint ignore:line
-				askModel.cobj.tags = $item.id;
+			askModel.onSelect = function ($item, $model, $label) { //jshint ignore:line				
+				askModel.selected.push($item);
+				askModel.cobj.tags.push($item._id);
+				askModel.current = ""
 			};
+
+			askModel.removeTag = function(idx) {
+				askModel.cobj.tags.splice(idx, 1);
+				askModel.selected.splice(idx, 1);
+			}
 
 			/* Creates a new question */
 			askModel.createQuestion = function () {
-				if (typeof askModel.cobj.tags === 'string') {
-					askModel.cobj.tags = [askModel.cobj.tags];
-				}
-
+				askModel.busy = true
 				questionsService.saveQuestion(askModel.cobj)
 					.then(function () {
 						askModel.cobj = {};
@@ -78,11 +77,12 @@ angular
 						askModel.cobj.text = '';
 						askModel.current = '';
 						askModel.questionSubmitted = true;
+						askModel.busy = false;
 						$location.url('/index');
 
 					})
-					.catch(function () {
-						alert('Error during question submit'); //jshint ignore:line
+					.catch(function (err) {
+						console.log(err); //jshint ignore:line
 					});
 			};
 

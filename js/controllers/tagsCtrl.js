@@ -9,9 +9,9 @@ angular
 			tagsModel.orderTags = function (predicate) {
 				switch (predicate) {
 				case 'name':
-					tagsModel.tags.instance.sort(function (a, b) {
-						var nameA = a.get('name').toLowerCase();
-						var nameB = b.get('name').toLowerCase();
+					tagsModel.tags.sort(function (a, b) {
+						var nameA = a.name.toLowerCase();
+						var nameB = b.name.toLowerCase();
 						if (nameA < nameB) return -1;
 						if (nameA > nameB) return 1;
 						return 0;
@@ -20,18 +20,18 @@ angular
 					break;
 
 				case '-count':
-					tagsModel.tags.instance.sort(function (a, b) {
-						var countA = parseInt(a.get('count'));
-						var countB = parseInt(b.get('count'));
+					tagsModel.tags.sort(function (a, b) {
+						var countA = parseInt(a.count);
+						var countB = parseInt(b.count);
 						return countB - countA;
 					})
 					tagsModel.order = '-count';
 					break;
 
 				case '-dt_create':
-					tagsModel.tags.instance.sort(function (a, b) {
-						var dt_createA = a.get('dt_create');
-						var dt_createB = b.get('dt_create');
+					tagsModel.tags.sort(function (a, b) {
+						var dt_createA = a.dt_create;
+						var dt_createB = b.dt_create;
 						return new Date(dt_createB) - new Date(dt_createA);
 					})
 					tagsModel.order = '-dt_create';

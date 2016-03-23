@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/dist/stylesheets.min.css" rel="stylesheet">
 
@@ -35,16 +36,16 @@
             </div>
             <div class="col-md-6 ng-cloak">
               <ul class="nav navbar-nav pull-right">
-                <li ng-hide="user.instance._id"><a href="" ng-click="user.login('github')" style="color:white">Login</a></li>
-                <li class="dropdown pull-right"  ng-show="user.instance._id">
+                <li ng-hide="user._id"><a href="" ng-click="login()" style="color:white">Login</a></li>
+                <li class="dropdown pull-right"  ng-show="user._id">
                   <a class="dropdown-toggle" data-toggle="dropdown">
-                    {{user.instance.displayName}}
-                    <img ng-src="{{user.instance.profileImg}}" style="width:24px; height:24px; margin-left:20px;">
-                    {{user.totalPoints || 0}}
+                    {{user.displayName}}
+                    <img ng-src="{{user.profileImg}}" style="width:24px; height:24px; margin-left:20px;">
+                    {{user.points || 0}}
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a href="" ng-click="user.logout()">Logout</a></li>
+                    <li><a href="" ng-click="logout()">Logout</a></li>
                   </ul>
                 </li>
             </ul>
@@ -75,7 +76,7 @@
                     <li ng-class="{youarehere : url == '/users'}"><a ui-sref="users">Users</a></li>
                     <li ng-class="{youarehere : url == '/questions/ask'}"  
                       class="pull-right"
-                      ng-show="user.instance._id">
+                      ng-show="user._id">
                       <a ui-sref="ask">Ask a question</a>
                     </li>
                   </ul>
@@ -106,10 +107,13 @@
 
       <!-- ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
-      <script src="/bower_components/stamplay-sdk/dist/stamplay.min.js"></script>
+      <script src="/bower_components/stamplay-js-sdk/dist/stamplay.min.js"></script>
       <script src="/bower_components/jquery/dist/jquery.min.js"></script>
       <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script src="/bower_components/angular/angular.min.js"></script>
+      <script src="/bower_components/angular-stamplay/angular-stamplay.js"></script>
+      <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+      <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
       <script src="/bower_components/angular-route/angular-route.min.js"></script>
       <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       

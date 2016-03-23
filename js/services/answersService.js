@@ -6,26 +6,22 @@ angular
 	.factory('answersService', ['$q', 'usersService', '$stamplay', function ($q, usersService, $stamplay) {
 
 		function _getTotalVotes(model) {
-			return model.get('actions').votes.users_upvote.length - model.get('actions').votes.users_downvote.length
+			return model.actions.votes.users_upvote.length - model.actions.votes.users_downvote.length
 		}
 
 		return {
 
 			createAnswer: function (params) {
 				var def = $q.defer();
-				var answerModel = $stamplay.Cobject('answer').Model;
+				var answerModel = {}
 
 				angular.forEach(params, function (value, key) {
-					answerModel.set(key, value);
+					answerModel[key] = value;
 				});
 
-				answerModel.save()
-					.then(function () {
-						return usersService.getById(answerModel.get('author'))
-					})
-					.then(function (authorModel) {
-						answerModel.set('author', authorModel);
-						def.resolve(answerModel);
+				$stamplay.Object("answer").save(answerModel)
+					.then(function (res) {
+						def.resolve(res);
 					})
 					.catch(function (err) {
 						def.reject(err);
@@ -35,28 +31,25 @@ angular
 			},
 
 			updateModel: function (answer, attrs) {
-				var answerModel = $stamplay.Cobject('answer').Model;
+				var checkedAnswer = {};
 				attrs.forEach(function (key) {
-					answerModel.set(key, answer.get(key));
+					checkedAnswer[key] = answer[key];
 				});
-				answerModel.set('_id', answer.get('_id'));
+				
 
-				return answerModel.save({
-					patch: true
-				});
+				return $stamplay.Object("answer").patch(answer._id, checkedAnswer);
 
 			},
 
 			voteUp: function (aModel) {
 				var def = $q.defer();
 				//cache populate data
-				var author = aModel.get('author');
+				var answer = aModel;
 
-				aModel.upVote()
-					.then(function () {
-						aModel.set('author', author);
-
-						def.resolve(_getTotalVotes(aModel));
+				$stamplay.Object("answer").upVote(answer._id)
+					.then(function (res) {
+						answer.actions = res.actions;
+						def.resolve(_getTotalVotes(answer));
 					})
 					.catch(function (err) {
 						def.reject(err);
@@ -68,13 +61,12 @@ angular
 			voteDown: function (aModel) {
 				var def = $q.defer();
 				//cache populate data
-				var author = aModel.get('author');
+				var answer = aModel;
 
-				aModel.downVote()
-					.then(function () {
-						aModel.set('author', author);
-
-						def.resolve(_getTotalVotes(aModel));
+				$stamplay.Object("answer").downVote(answer._id)
+					.then(function (res) {
+						answer.actions = res.actions;
+						def.resolve(_getTotalVotes(answer));
 					})
 					.catch(function (err) {
 						def.reject(err);
@@ -86,11 +78,11 @@ angular
 			comment: function (aModel, commentText) {
 				var def = $q.defer();
 				//cache populate data
-				var author = aModel.get('author');
+				var answer = aModel;
 
-				aModel.comment(commentText)
-					.then(function () {
-						aModel.set('author', author);
+				$stamplay.Object("answer").comment(answer._id, commentText)
+					.then(function (res) {
+						answer.actions = res.actions;
 						def.resolve();
 					})
 					.catch(function (err) {

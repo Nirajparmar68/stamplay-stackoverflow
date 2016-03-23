@@ -21,24 +21,18 @@ angular
 
 			/* Loads the questions given a sort parameter */
 			homeModel.loadQuestions = function (params) {
-
 				questionsService.getQuestions(params)
 					.then(function (result) {
-						if (homeModel.questions.add) {
-							result.forEach(function (item) {
-								homeModel.questions.add(item);
-							})
-						} else {
-							homeModel.questions = result;
-							homeModel.totalLength = homeModel.questions.totalElements;
-						}
+						homeModel.questions = result.questions;
+						homeModel.total = result.pagination;
 						homeModel.page++;
 						homeModel.busy = false;
 					});
 			};
 
 			homeModel.loadNext = function (page) {
-				if (homeModel.questions.length !== homeModel.totalLength) {
+					if(homeModel.total === homeModel.questions.length) return;
+
 					homeModel.busy = true;
 					var params = {
 						sort: homeModel.sort,
@@ -50,14 +44,15 @@ angular
 
 					homeModel.loadQuestions(params);
 
-				}
+				
 			};
 
 			/* Listener on tab */
 			homeModel.sortQuestion = function (sortOn) {
+				homeModel.busy = true;
 				homeModel.page = 1;
 				homeModel.totalLength = 0;
-				homeModel.questions = [];
+				homeModel.questions.length = 0;
 				switch (sortOn) {
 				case 'newest':
 					homeModel.sort = '-dt_create';

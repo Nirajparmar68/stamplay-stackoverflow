@@ -2,106 +2,96 @@
 'use strict';
 
 angular
-	.module('stack.service')
-	.factory('userService', ['$q', '$http', '$stamplay', function ($q, $http, $stamplay) {
-		var user = $stamplay.User().Model;
+.module('stack.service')
+.factory('userService', ['$q', '$http', '$stamplay', "$rootScope", function ($q, $http, $stamplay, $rootScope) {
 
-		return {
-			isLogged: function () {
-				return user.isLogged;
-			},
+	var logged = false;
 
-			login: function () {
-				user.login('github');
-			},
+	$rootScope.login = function() {
+		$stamplay.User.socialLogin('github');
+	}
 
-			logout: function () {
-				user.logout('github');
-			},
+	$rootScope.logout = function() {
+		$stamplay.User.logout();
+	}
 
-			getUserModel: function () {
-				var def = $q.defer();
-				if (user.get('_id')) {
-					def.resolve(user);
+	return {
+		isLogged: function () {
+			return logged;
+		},
+
+
+
+		getUserModel: function () {
+			var def = $q.defer();
+
+			$stamplay.User.currentUser()
+			.then(function(res) {
+
+				if (res.user.hasOwnProperty('_id')) {		
+					res.user.points = res.user.points || 0;
+					logged = true;
+					def.resolve(res.user);
 				} else {
-
-					user.currentUser()
-						.then(function () {
-							$http({
-								method: 'GET',
-								url: '/api/gm/v0/challenges/stackchallenge/userchallenges/' + user.get('_id')
-							}).success(function (response) {
-								if (response.points) {
-									user.totalPoints = response.points;
-								} else {
-									user.totalPoints = 0;
-								}
-							})
-
-							def.resolve(user);
-						})
-						.catch(function (err) {
-							def.reject(err);
-						});
+					logged = false;
+					def.resolve(false)
 				}
 
-				return def.promise;
-			}
-		};
-	}])
+			})
+			.catch(function (err) {
+				def.reject(err);
+			});
+
+
+			return def.promise;
+		}
+	};
+}])
 
 .factory('usersService', ['$q', '$stamplay', function ($q, $stamplay) {
-	var usersList = $stamplay.User().Collection;
 
 	return {
 
 		getUsers: function () {
 			var def = $q.defer();
 
-			usersList.fetch()
-				.then(function () {
-					def.resolve(usersList);
-				})
-				.catch(function (err) {
-					def.reject(err);
-				});
+			$stamplay.User.get({})
+			.then(function (res) {
+				def.resolve(res.data);
+			})
+			.catch(function (err) {
+				def.reject(err);
+			});
 
 			return def.promise;
 		},
 
 		getById: function (userId) {
 			var def = $q.defer();
-			var fetched;
 
-			if (usersList.get(userId)) {
-				fetched = usersList.get(userId);
-				def.resolve(fetched);
-			} else {
-				fetched = $stamplay.User().Model;
-				fetched.fetch(userId)
-					.then(function () {
-						usersList.add(fetched);
-						def.resolve(fetched);
-					})
-					.catch(function (err) {
-						def.reject(err);
-					});
-			}
+			$stamplay.User.get({ _id : userId })
+			.then(function (res) {
+				def.resolve(res.data[0]);
+			})
+			.catch(function (err) {
+				def.reject(err);
+			});
+			
 
 			return def.promise;
 		},
 
 		searchUser: function (params) {
-			var fetched = $stamplay.User().Collection;
+
 			var def = $q.defer();
 
-			fetched.fetch(params)
-				.then(function () {
-					def.resolve(fetched);
-				})
-				.catch(function (err) {
-					def.reject(err);
-				});
+			$stamplay.User.get(params)
+			.then(function (res) {
+				def.resolve(res.data);
+			})
+			.catch(function (err) {
+				def.reject(err);
+			});
 
 			return def.promise;
 		}

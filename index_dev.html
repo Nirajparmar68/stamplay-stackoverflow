@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
     <link href="/css/question.css" rel="stylesheet">
@@ -47,7 +48,7 @@
                   <a class="dropdown-toggle" data-toggle="dropdown">
                     {{user.instance.displayName}}
                     <img ng-src="{{user.instance.profileImg}}" style="width:24px; height:24px; margin-left:20px;">
-                    {{user.totalPoints || 0}}
+                    {{user.points || 0}}
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu pull-right" role="menu">
@@ -111,19 +112,20 @@
         </div>
       </div>
 
-      <script src="/bower_components/stamplay-sdk/dist/stamplay.js"></script>
+      <script src="/bower_components/stamplay-js-sdk/dist/stamplay.js"></script>
       <script src="/bower_components/jquery/dist/jquery.min.js"></script>
       <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script src="/bower_components/angular/angular.min.js"></script>
       <script src="/bower_components/angular-route/angular-route.min.js"></script>
+      <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+      <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
       <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      
+      <script src="/bower_components/angular-stamplay/angular-stamplay.js"></script>
       <script src="/js/services/main.js"></script>
       <script src="/js/services/userService.js"></script>
       <script src="/js/services/tagsService.js"></script>
       <script src="/js/services/questionsService.js"></script>
       <script src="/js/services/answersService.js"></script>
-      <script src="/js/services/angular-stamplay.js"></script>
 
       <script src="/js/lib/ng-infinite-scroll.js"></script>
       <script src="/js/lib/ui-bootstrap-0.11.0.min.js"></script>

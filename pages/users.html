@@ -17,14 +17,14 @@
     </div>
 
     <div class="row tag-container">
-    	<div class="col-md-3 user-info" ng-repeat="user in usersModel.userList.instance">
+    	<div class="col-md-3 user-info" ng-repeat="user in usersModel.userList">
     		<div class="user-gravatar48">
-    			<img ng-src="{{user.instance.profileImg}}" style="width:48px; height:48px; float:left"  />
+    			<img ng-src="{{user.profileImg}}" style="width:48px; height:48px; float:left"  />
     		</div>
     		<div class="user-details-info">
-    			<a>{{user.instance.displayName}}</a>
+    			<a>{{user.displayName}}</a>
     			<br>
-    			<span class="user-location">{{user.instance.dt_create| date:"mediumDate"}}</span>
+    			<span class="user-location">{{user.dt_create| date:"mediumDate"}}</span>
     			<br>
     		</div>
     	</div>

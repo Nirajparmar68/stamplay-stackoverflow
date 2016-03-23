@@ -5,58 +5,59 @@ angular
 	.module('stack.service')
 	.factory('questionsService', ['$q', 'usersService', 'tagsService', 'answersService', '$stamplay',
 		function ($q, usersService, tagsService, answersService, $stamplay) {
-			var questionsLoaded = $stamplay.Cobject('question').Collection;
+
+			var questions = [];
+			var pagination = {};
 
 			function _getTotalVotes(model) {
-				return model.get('actions').votes.users_upvote.length - model.get('actions').votes.users_downvote.length
+				return model.actions.votes.users_upvote.length - model.actions.votes.users_downvote.length
 			}
 
 			return {
 
 				getQuestions: function (param) {
 					var def = $q.defer();
-					var questionsList = $stamplay.Cobject('question').Collection;
+					// Stop request after paging through all elements
+					
+						$stamplay.Object('question').get(param)
+							.then(function (res) {
+								pagination = res.pagination.total_elements;
+								var list = res.data;
+								for(var i = 0; i < list.length; i += 1) {
+									list[i].author = list[i].owner;
+									questions.push(list[i]);
+								};
 
-					questionsList.fetch(param, true)
-						.then(function () {
-							questionsList.instance.forEach(function (question) {
-								question.set('author', question.get('owner'));
-								def.resolve(questionsList);
+								def.resolve({ pagination : pagination, questions : questions });
 							});
-						});
+					
+
+
 					return def.promise;
 				},
 
 				searchQuestion: function (questionId) {
 					var def = $q.defer();
-
-					if (questionsLoaded.get(questionId)) {
-						def.resolve(questionsLoaded.get(questionId));
-					} else {
-						var qModel = $stamplay.Cobject('question').Model;
-						qModel.fetch(questionId)
-							.then(function () {
-								return usersService.getById(qModel.get('author'))
-							})
-							.then(function (authorModel) {
-								qModel.set('author', authorModel);
-							})
-							.then(function () {
-								if (qModel.get('tags').length) {
-									return tagsService.getById(qModel.get('tags')[0])
-								} else {
-									return;
-								}
-							}).then(function (tagModel) {
-								if (tagModel) {
-									qModel.set('tags', [tagModel]);
-								}
-								def.resolve(qModel);
+					
+						$stamplay.Object("question").get({
+							_id : questionId,
+							populate : true,
+							populate_owner : true
+						}).then(function (res) {
+								var question = res.data[0]
+								question.author = question.owner;
+								$stamplay.Object("answer").get({
+									where : JSON.stringify({ _id : { $in : question.answers } }),
+									populate_owner : true
+								})
+								.then(function(res) {
+									question.answers = res.data;
+									def.resolve(question);
+								})
 							})
 							.catch(function (err) {
 								def.reject(err);
 							})
-					}
 
 					return def.promise;
 
@@ -69,101 +70,49 @@ angular
 					var def = $q.defer();
 
 					this.searchQuestion(questionId)
-						.then(function (qModel) {
+						.then(function (question) {
 
-							var answerList = [];
-							async.each(qModel.get('answers'),
-								function (answer, callbackEach) {
-									if (typeof answer === 'string') {
-										//answer not previously solved
-										answersService.getById(answer)
-											.then(function (answerModel) {
-												answerList.push(answerModel);
-												callbackEach();
-											})
-											.catch(function (err) {
-												callbackEach(err);
-											});
-									} else {
-										//answer previously solved
-										answerList.push(answer);
-										callbackEach();
-									}
-								},
-								function (err) {
-									if (err) {
-										def.reject(err);
-									} else {
-										qModel.set('answers', answerList);
-										def.resolve(qModel);
-									}
-
-								});
+							def.resolve(question);
 						});
 
 					return def.promise;
 				},
 
-				newQuestion: function (params) {
-					var questionModel = $stamplay.Cobject('question').Model;
-					angular.forEach(params, function (value, key) {
-						questionModel.set(key, value);
-					});
-
-					return questionModel;
-				},
-
 				updateViews: function (question) {
-					var questionModel = $stamplay.Cobject('question').Model;
-					var actualViews = question.get('views') || 0;
+					var actualViews = question.views || 0;
 					actualViews++;
-					questionModel.set('_id', question.get('_id'));
-					questionModel.set('views', actualViews);
-					questionModel.set('owner', question.get('owner'));
-
-					question.set('views', actualViews);
-
-					return questionModel.save({
-						patch: true
-					});
+					return $stamplay.Object("question").patch(question._id, { views : actualViews })
 				},
 
 				updateModel: function (question, attrs) {
-					var questionModel = $stamplay.Cobject('question').Model;
+					var questionModel = {};
+
 					attrs.forEach(function (key) {
-						if (key !== 'answers') {
-							questionModel.set(key, question.get(key));
+						if (key !== 'answers' && key !== 'owner' && key !== 'tags' && key !== "author") {
+							questionModel[key] = question[key];
 						} else {
 							var answerIDs = [];
-							question.get('answers').forEach(function (item) {
-								answerIDs.push(item.get('_id'));
-							});
-
-							questionModel.set('answers', answerIDs);
+							for(var i = 0; i < question[key].length; i += 1) {
+								answerIDs.push(question[key][i]._id);
+							};
+							questionModel.answers = answerIDs;
 						}
 					});
 
-					questionModel.set('_id', question.get('_id'));
+					questionModel._id = question._id;
 
-					return questionModel.save({
-						patch: true
-					});
+					return $stamplay.Object("question").patch(questionModel._id, questionModel);
 				},
 
 				voteUp: function (qModel) {
 					var def = $q.defer();
 					//cache populate data
-					var author = qModel.get('author');
-					var answers = qModel.get('answers');
-					var tags = qModel.get('tags');
+					var question = qModel;
 
-					qModel.upVote()
-						.then(function () {
-							qModel.set('author', author);
-							qModel.set('answers', answers);
-							qModel.set('tags', tags);
-
-							def.resolve(_getTotalVotes(qModel));
+					$stamplay.Object("question").upVote(qModel._id)
+						.then(function (res) {
+							question.actions = res.actions
+							def.resolve(_getTotalVotes(question));
 						})
 						.catch(function (err) {
 							def.reject(err);
@@ -175,17 +124,12 @@ angular
 				voteDown: function (qModel) {
 					var def = $q.defer();
 					//cache populate data
-					var author = qModel.get('author');
-					var answers = qModel.get('answers');
-					var tags = qModel.get('tags');
+					var question = qModel;
 
-					qModel.downVote()
-						.then(function () {
-							qModel.set('author', author);
-							qModel.set('answers', answers);
-							qModel.set('tags', tags);
-
-							def.resolve(_getTotalVotes(qModel));
+					$stamplay.Object("question").downVote(qModel._id)
+						.then(function (res) {
+							question.actions = res.actions;
+							def.resolve(_getTotalVotes(question));
 						})
 						.catch(function (err) {
 							def.reject(err);
@@ -197,17 +141,12 @@ angular
 				commentQuestion: function (qModel, commentText) {
 					var def = $q.defer();
 					//cache populate data
-					var author = qModel.get('author');
-					var answers = qModel.get('answers');
-					var tags = qModel.get('tags');
+					var question = qModel;
 
-					qModel.comment(commentText)
-						.then(function () {
-							qModel.set('author', author);
-							qModel.set('answers', answers);
-							qModel.set('tags', tags);
-
-							def.resolve();
+					$stamplay.Object("question").comment(question._id, commentText)
+						.then(function (res) {
+							question.actions = res.actions;
+							def.resolve(question);
 						})
 						.catch(function (err) {
 							def.reject(err);
@@ -218,18 +157,16 @@ angular
 
 				saveQuestion: function (params) {
 					var def = $q.defer();
-					var questionModel = this.newQuestion(params);
-
-					questionModel.save()
-						.then(function () {
+					$stamplay.Object("question").save(params)
+						.then(function (res) {
+							var question = res.data;
 							async.each(params.tags, function (tagId, callback) {
 								/* GET for retrieving the tag count  */
 								tagsService.getById(tagId)
 									.then(function (tag) {
-										var count = tag.get('count') || 0;
-
-										tag.set('count', ++count);
-										tag.save()
+										var count = count || 0;
+										tag.count = count++;
+										$stamplay.Object("tag").patch(tag._id, tag)
 											.then(function () {
 												callback();
 											}).catch(function (err) {
@@ -237,43 +174,22 @@ angular
 											});
 									});
 							}, function (err) {
-								if (err) {
-									def.reject(err);
-								} else {
-									usersService.getById(questionModel.get('author'))
-										.then(function (userModel) {
-											questionModel.set('author', userModel);
-										})
-										.then(function () {
-											if (questionModel.get('tags').length) {
-												tagsService.getById(questionModel.get('tags')[0])
-													.then(function (tagModel) {
-														questionModel.set('tags', [tagModel]);
-														questionsLoaded.add(questionModel);
-														def.resolve(questionModel);
-													})
-											} else {
-												questionsLoaded.add(questionModel);
-												def.resolve(questionModel);
-											}
-										})
-										.catch(function (err) {
-											def.reject(err);
-										})
-								}
-							});
-						}).catch(function (err) {
-							def.reject(err);
-						});
+									if (err) {
+										def.reject(err);
+									} else {
+										def.resolve(question);
+									}
+										
+								});
+						})
 
 					return def.promise;
 				},
 
 				submitAnswer: function (question, nAnswer) {
-					var newAnswers = question.get('answers');
+					var newAnswers = question.answers;
 					newAnswers.push(nAnswer);
-					question.set('answers', newAnswers)
-
+					question.answers = newAnswers;
 					return this.updateModel(question, ['answers']);
 				}
 
