@@ -45,9 +45,10 @@ angular
 							populate_owner : true
 						}).then(function (res) {
 								var question = res.data[0]
+								var answers = _.pluck(question.answers, '_id');
 								question.author = question.owner;
 								$stamplay.Object("answer").get({
-									where : JSON.stringify({ _id : { $in : question.answers } }),
+									where : JSON.stringify({ _id : { $in : answers } }),
 									populate_owner : true
 								})
 								.then(function(res) {
